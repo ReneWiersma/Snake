@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 
 namespace ConsoleApp1
@@ -18,6 +17,7 @@ namespace ConsoleApp1
         static int direction; //0=Up 1=Right 2=Down 3=Left
         static readonly int speed = 1;
         static int snakeLength = 5;
+        static bool lost;
 
         static void Main(string[] args)
         {
@@ -28,16 +28,27 @@ namespace ConsoleApp1
             UpdatePos();
             AddFood();
 
-            while (true)
-            {
-                Restart();
-            }
+            PlayGame();
         }
 
-        static void Restart()
+        static void PlayGame()
         {
-            UpdateScreen();
-            GetInput();
+            while (!lost)
+            {
+                if (!Console.KeyAvailable)
+                {
+                    Move();
+                    UpdateScreen();
+                }
+                else
+                {
+                    var input = Console.ReadKey();
+                    DoInput(input.KeyChar);
+                }
+            }
+
+            Console.WriteLine("\nYou lost!");
+            Console.ReadKey();
         }
 
         static void UpdateScreen()
@@ -45,17 +56,6 @@ namespace ConsoleApp1
             Console.SetCursorPosition(0, 0);
             PrintGrid();
             Console.WriteLine("Length: {0}", snakeLength);
-        }
-
-        static void GetInput()
-        {
-            while (!Console.KeyAvailable)
-            {
-                Move();
-                UpdateScreen();
-            }
-            var input = Console.ReadKey();
-            DoInput(input.KeyChar);
         }
 
         static void CheckCell(Cell cell)
@@ -72,10 +72,7 @@ namespace ConsoleApp1
 
         static void Lose()
         {
-            Console.WriteLine("\n You lose!");
-            Thread.Sleep(1000);
-            Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            Environment.Exit(-1);
+            lost = true;
         }
 
         static void DoInput(char inp)
@@ -253,7 +250,6 @@ namespace ConsoleApp1
                 {
                     grid[col, row].DecaySnake();
                     toPrint += grid[col, row].Val;
-
                 }
                 toPrint += "\n";
             }
