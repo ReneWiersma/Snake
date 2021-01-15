@@ -17,7 +17,7 @@ namespace SnakeConsoleApp
         static Cell currentCell;
         static int snakeLength = 5;
         static bool lost;
-        static Direction direction = Direction.Up;
+        static Movement movement = Movement.Default;
 
         static void Main(string[] args)
         {
@@ -62,16 +62,16 @@ namespace SnakeConsoleApp
             switch (inp)
             {
                 case 'w':
-                    GoUp();
+                    movement = movement.Up();
                     break;
                 case 's':
-                    GoDown();
+                    movement = movement.Down();
                     break;
                 case 'a':
-                    GoLeft();
+                    movement = movement.Left();
                     break;
                 case 'd':
-                    GoRight();
+                    movement = movement.Right();
                     break;
             }
         }
@@ -91,33 +91,10 @@ namespace SnakeConsoleApp
             AddFood();
         }
 
-        static void GoUp()
-        {
-            if (direction != Direction.Down)
-                direction = Direction.Up;
-        }
-
-        static void GoLeft()
-        {
-            if (direction != Direction.Right)
-                direction = Direction.Left;
-        }
-
-        static void GoDown()
-        {
-            if (direction != Direction.Up)
-                direction = Direction.Down;
-        }
-
-        static void GoRight()
-        {
-            if (direction != Direction.Left)
-                direction = Direction.Right;
-        }
-
         static void MoveSnake()
         {
-            var nextCell = GetNextCell(direction);
+            var (y, x) = movement.NextPosition(currentCell.Y, currentCell.X);
+            var nextCell = grid[y, x];
 
             if (nextCell.Val == "*" || nextCell.Visited)
             {
@@ -135,33 +112,9 @@ namespace SnakeConsoleApp
             currentCell = nextCell;
         }
 
-        private static Cell GetNextCell(Direction direction) => direction switch
-        {
-            Direction.Left => grid[currentCell.Y, currentCell.X - 1],
-            Direction.Down => grid[currentCell.Y + 1, currentCell.X],
-            Direction.Right => grid[currentCell.Y, currentCell.X + 1],
-            _ => grid[currentCell.Y - 1, currentCell.X],
-        };
-
         static void UpdatePos()
         {
-            if (direction == Direction.Up)
-            {
-                currentCell.Val = "^";
-            }
-            else if (direction == Direction.Left)
-            {
-                currentCell.Val = "<";
-            }
-            else if (direction == Direction.Down)
-            {
-                currentCell.Val = "v";
-            }
-            else if (direction == Direction.Right)
-            {
-                currentCell.Val = ">";
-            }
-
+            currentCell.Val = movement.SnakeHead;
             currentCell.Visited = false;
         }
 
