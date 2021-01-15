@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Threading;
 
-namespace ConsoleApp1
+namespace SnakeConsoleApp
 {
     /// <summary>
     /// Original code based on code review request by user Terradice on StackExchange:
     /// https://codereview.stackexchange.com/questions/210835/console-snake-game-in-c
     /// </summary>
-    public enum Direction
-    { 
-        Up = 0, Left = 1, Down = 2, Right = 3
-    }
-
-    class Program
+    partial class Program
     {
         static readonly int gridW = 90;
         static readonly int gridH = 25;
@@ -217,7 +212,8 @@ namespace ConsoleApp1
         {
             Console.SetCursorPosition(0, 0);
 
-            string toPrint = "";
+            var toPrint = "";
+
             for (int col = 0; col < gridH; col++)
             {
                 for (int row = 0; row < gridW; row++)
@@ -225,58 +221,11 @@ namespace ConsoleApp1
                     grid[col, row].DecaySnake();
                     toPrint += grid[col, row].Val;
                 }
+
                 toPrint += "\n";
             }
 
             Console.WriteLine(toPrint);
-        }
-        public class Cell
-        {
-            public string Val
-            {
-                get;
-                set;
-            }
-            public int X
-            {
-                get;
-                set;
-            }
-            public int Y
-            {
-                get;
-                set;
-            }
-            public bool Visited
-            {
-                get;
-                set;
-            }
-            public int Decay
-            {
-                get;
-                set;
-            }
-
-            public void DecaySnake()
-            {
-                Decay -= 1;
-                if (Decay == 0)
-                {
-                    Visited = false;
-                    Val = " ";
-                }
-            }
-
-            public void Clear()
-            {
-                Val = " ";
-            }
-
-            public void Set(string newVal)
-            {
-                Val = newVal;
-            }
         }
     }
 }
