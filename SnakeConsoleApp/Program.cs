@@ -190,7 +190,6 @@ namespace ConsoleApp1
             }
 
             currentCell.Visited = false;
-            return;
         }
 
         static void PopulateGrid()
