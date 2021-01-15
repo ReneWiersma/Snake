@@ -35,15 +35,15 @@ namespace ConsoleApp1
         {
             while (!lost)
             {
-                if (!Console.KeyAvailable)
-                {
-                    Move();
-                    UpdateScreen();
-                }
-                else
+                if (Console.KeyAvailable)
                 {
                     var input = Console.ReadKey();
                     DoInput(input.KeyChar);
+                }
+                else
+                {
+                    Move();
+                    UpdateScreen();
                 }
             }
 
