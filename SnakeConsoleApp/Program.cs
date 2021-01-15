@@ -49,13 +49,12 @@ namespace ConsoleApp1
 
         static void GetInput()
         {
-            ConsoleKeyInfo input;
             while (!Console.KeyAvailable)
             {
                 Move();
                 UpdateScreen();
             }
-            input = Console.ReadKey();
+            var input = Console.ReadKey();
             DoInput(input.KeyChar);
         }
 
