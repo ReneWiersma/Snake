@@ -1,6 +1,5 @@
 ﻿namespace SnakeConsoleApp
 {
-
     public class Movement
     {
         private readonly Direction direction;
@@ -12,43 +11,33 @@
 
         public static Movement Default => new Movement(Direction.Up);
 
-
         Movement(Direction direction)
         {
             this.direction = direction;
         }
 
-        public Movement Up()
+        public Movement Up() => ChangeMovement(Direction.Up);
+
+        public Movement Down() => ChangeMovement(Direction.Down);
+
+        public Movement Left() => ChangeMovement(Direction.Left);
+
+        public Movement Right() => ChangeMovement(Direction.Right);
+
+        Movement ChangeMovement(Direction newDirection)
         {
-            if (direction != Direction.Down)
-                return new Movement(Direction.Up);
+            if (RightAngled(newDirection))
+                return new Movement(newDirection);
 
             return this;
         }
 
-        public Movement Down()
+        bool RightAngled(Direction newDirection) => direction switch
         {
-            if (direction != Direction.Up)
-                return new Movement(Direction.Down);
-
-            return this;
-        }
-
-        public Movement Left()
-        {
-            if (direction != Direction.Right)
-                return new Movement(Direction.Left);
-
-            return this;
-        }
-
-        public Movement Right()
-        {
-            if (direction != Direction.Left)
-                return new Movement(Direction.Right);
-
-            return this;
-        }
+            Direction.Left or Direction.Right => newDirection is Direction.Up or Direction.Down,
+            Direction.Up or Direction.Down => newDirection is Direction.Left or Direction.Right,
+            _ => false,
+        };
 
         public (int y, int x) NextPosition(int y, int x) => direction switch
         {
@@ -57,6 +46,7 @@
             Direction.Right => (y, x + 1),
             _ => (y - 1, x),
         };
+
         public string SnakeHead => direction switch
         {
             Direction.Left => "<",
