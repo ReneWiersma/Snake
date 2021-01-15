@@ -89,15 +89,12 @@ namespace ConsoleApp1
 
         static void AddFood()
         {
-            Random r = new Random();
-            Cell cell;
-            while (true)
-            {
-                cell = grid[r.Next(grid.GetLength(0)), r.Next(grid.GetLength(1))];
-                if (cell.Val == " ")
-                    cell.Val = "%";
-                break;
-            }
+            var random = new Random();
+            
+            var cell = grid[random.Next(grid.GetLength(0)), random.Next(grid.GetLength(1))];
+            
+            if (cell.Val == " ")
+                cell.Val = "%";
         }
 
         static void EatFood()
