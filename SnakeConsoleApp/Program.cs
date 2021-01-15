@@ -42,7 +42,10 @@ namespace SnakeConsoleApp
                 }
 
                 MoveSnake();
+                UpdatePos();
                 PrintGrid();
+                
+                Thread.Sleep(speed * 100);
             }
 
             Console.WriteLine("\nYou lost!");
@@ -130,10 +133,6 @@ namespace SnakeConsoleApp
             currentCell.Decay = snakeLength;
 
             currentCell = nextCell;
-
-            UpdatePos();
-
-            Thread.Sleep(speed * 100);
         }
 
         private static Cell GetNextCell(Direction direction) => direction switch
