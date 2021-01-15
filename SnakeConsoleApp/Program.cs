@@ -22,15 +22,11 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            if (!Populated)
-            {
-                snakeLength = 5;
-                populateGrid();
-                currentCell = grid[(int)Math.Ceiling((double)gridH / 2), (int)Math.Ceiling((double)gridW / 2)];
-                updatePos();
-                addFood();
-                Populated = true;
-            }
+            snakeLength = 5;
+            populateGrid();
+            currentCell = grid[(int)Math.Ceiling((double)gridH / 2), (int)Math.Ceiling((double)gridW / 2)];
+            updatePos();
+            addFood();
 
             while (true)
             {
