@@ -17,14 +17,14 @@ namespace ConsoleApp1
         static Cell currentCell;
         static int direction; //0=Up 1=Right 2=Down 3=Left
         static readonly int speed = 1;
-        static bool Populated = false;
-        static int snakeLength;
+        static int snakeLength = 5;
 
         static void Main(string[] args)
         {
-            snakeLength = 5;
             populateGrid();
+
             currentCell = grid[(int)Math.Ceiling((double)gridH / 2), (int)Math.Ceiling((double)gridW / 2)];
+            
             updatePos();
             addFood();
 
@@ -36,9 +36,7 @@ namespace ConsoleApp1
 
         static void Restart()
         {
-            Console.SetCursorPosition(0, 0);
-            printGrid();
-            Console.WriteLine("Length: {0}", snakeLength);
+            updateScreen();
             getInput();
         }
 
