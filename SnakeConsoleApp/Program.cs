@@ -43,19 +43,12 @@ namespace ConsoleApp1
                 else
                 {
                     Move();
-                    UpdateScreen();
+                    PrintGrid();
                 }
             }
 
             Console.WriteLine("\nYou lost!");
             Console.ReadKey();
-        }
-
-        static void UpdateScreen()
-        {
-            Console.SetCursorPosition(0, 0);
-            PrintGrid();
-            Console.WriteLine("Length: {0}", snakeLength);
         }
 
         static void CheckCell(Cell cell)
@@ -243,6 +236,8 @@ namespace ConsoleApp1
 
         static void PrintGrid()
         {
+            Console.SetCursorPosition(0, 0);
+
             string toPrint = "";
             for (int col = 0; col < gridH; col++)
             {
@@ -253,6 +248,7 @@ namespace ConsoleApp1
                 }
                 toPrint += "\n";
             }
+
             Console.WriteLine(toPrint);
         }
         public class Cell
