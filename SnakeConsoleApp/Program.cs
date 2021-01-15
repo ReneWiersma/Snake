@@ -49,18 +49,6 @@ namespace SnakeConsoleApp
             Console.ReadKey();
         }
 
-        static void CheckCell(Cell cell)
-        {
-            if (cell.Val == "%")
-            {
-                EatFood();
-            }
-            if (cell.Visited)
-            {
-                Lose();
-            }
-        }
-
         static void Lose()
         {
             lost = true;
@@ -128,13 +116,22 @@ namespace SnakeConsoleApp
         {
             var nextCell = GetNextCell(direction);
 
-            if (nextCell.Val == "*")
+            if (nextCell.Val == "*" || nextCell.Visited)
             {
                 Lose();
                 return;
             }
 
-            VisitCell(nextCell);
+            if (nextCell.Val == "%")
+                EatFood();
+
+            currentCell.Val = "#";
+            currentCell.Visited = true;
+            currentCell.Decay = snakeLength;
+
+            currentCell = nextCell;
+
+            UpdatePos();
 
             Thread.Sleep(speed * 100);
         }
@@ -146,16 +143,6 @@ namespace SnakeConsoleApp
             Direction.Right => grid[currentCell.Y, currentCell.X + 1],
             _ => grid[currentCell.Y - 1, currentCell.X],
         };
-
-        static void VisitCell(Cell cell)
-        {
-            currentCell.Val = "#";
-            currentCell.Visited = true;
-            currentCell.Decay = snakeLength;
-            CheckCell(cell);
-            currentCell = cell;
-            UpdatePos();
-        }
 
         static void UpdatePos()
         {
