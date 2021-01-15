@@ -23,7 +23,7 @@ namespace SnakeConsoleApp
         {
             PopulateGrid();
 
-            currentCell = grid[(int)Math.Ceiling((double)gridH / 2), (int)Math.Ceiling((double)gridW / 2)];
+            currentCell = grid[gridH / 2, gridW / 2];
             
             UpdatePos();
             AddFood();
