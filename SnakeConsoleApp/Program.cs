@@ -139,44 +139,26 @@ namespace ConsoleApp1
 
         static void Move()
         {
-            if (direction == Direction.Up)
+            var nextCell = GetNextCell(direction);
+
+            if (nextCell.Val == "*")
             {
-                if (grid[currentCell.Y - 1, currentCell.X].Val == "*")
-                {
-                    Lose();
-                    return;
-                }
-                VisitCell(grid[currentCell.Y - 1, currentCell.X]);
+                Lose();
+                return;
             }
-            else if (direction == Direction.Right)
-            {
-                if (grid[currentCell.Y, currentCell.X - 1].Val == "*")
-                {
-                    Lose();
-                    return;
-                }
-                VisitCell(grid[currentCell.Y, currentCell.X - 1]);
-            }
-            else if (direction == Direction.Down)
-            {
-                if (grid[currentCell.Y + 1, currentCell.X].Val == "*")
-                {
-                    Lose();
-                    return;
-                }
-                VisitCell(grid[currentCell.Y + 1, currentCell.X]);
-            }
-            else if (direction == Direction.Left)
-            {
-                if (grid[currentCell.Y, currentCell.X + 1].Val == "*")
-                {
-                    Lose();
-                    return;
-                }
-                VisitCell(grid[currentCell.Y, currentCell.X + 1]);
-            }
+
+            VisitCell(nextCell);
+
             Thread.Sleep(speed * 100);
         }
+
+        private static Cell GetNextCell(Direction direction) => direction switch
+        {
+            Direction.Right => grid[currentCell.Y, currentCell.X - 1],
+            Direction.Down => grid[currentCell.Y + 1, currentCell.X],
+            Direction.Left => grid[currentCell.Y, currentCell.X + 1],
+            _ => grid[currentCell.Y - 1, currentCell.X],
+        };
 
         static void VisitCell(Cell cell)
         {
