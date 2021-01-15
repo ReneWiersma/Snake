@@ -18,7 +18,6 @@ namespace ConsoleApp1
         static int direction; //0=Up 1=Right 2=Down 3=Left
         static readonly int speed = 1;
         static bool Populated = false;
-        static bool Lost = false;
         static int snakeLength;
 
         static void Main(string[] args)
@@ -33,7 +32,7 @@ namespace ConsoleApp1
                 Populated = true;
             }
 
-            while (!Lost)
+            while (true)
             {
                 Restart();
             }
