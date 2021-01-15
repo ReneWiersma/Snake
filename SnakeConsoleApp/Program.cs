@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace ConsoleApp1
@@ -10,7 +9,7 @@ namespace ConsoleApp1
     /// </summary>
     public enum Direction
     { 
-        Up = 0, Right = 1, Down = 2, Left = 3
+        Up = 0, Left = 1, Down = 2, Right = 3
     }
 
     class Program
@@ -85,10 +84,10 @@ namespace ConsoleApp1
                     GoDown();
                     break;
                 case 'a':
-                    GoRight();
+                    GoLeft();
                     break;
                 case 'd':
-                    GoLeft();
+                    GoRight();
                     break;
             }
         }
@@ -116,11 +115,11 @@ namespace ConsoleApp1
             direction = Direction.Up;
         }
 
-        static void GoRight()
+        static void GoLeft()
         {
-            if (direction == Direction.Left)
+            if (direction == Direction.Right)
                 return;
-            direction = Direction.Right;
+            direction = Direction.Left;
         }
 
         static void GoDown()
@@ -130,11 +129,11 @@ namespace ConsoleApp1
             direction = Direction.Down;
         }
 
-        static void GoLeft()
+        static void GoRight()
         {
-            if (direction == Direction.Right)
+            if (direction == Direction.Left)
                 return;
-            direction = Direction.Left;
+            direction = Direction.Right;
         }
 
         static void Move()
@@ -154,9 +153,9 @@ namespace ConsoleApp1
 
         private static Cell GetNextCell(Direction direction) => direction switch
         {
-            Direction.Right => grid[currentCell.Y, currentCell.X - 1],
+            Direction.Left => grid[currentCell.Y, currentCell.X - 1],
             Direction.Down => grid[currentCell.Y + 1, currentCell.X],
-            Direction.Left => grid[currentCell.Y, currentCell.X + 1],
+            Direction.Right => grid[currentCell.Y, currentCell.X + 1],
             _ => grid[currentCell.Y - 1, currentCell.X],
         };
 
@@ -177,7 +176,7 @@ namespace ConsoleApp1
             {
                 currentCell.Val = "^";
             }
-            else if (direction == Direction.Right)
+            else if (direction == Direction.Left)
             {
                 currentCell.Val = "<";
             }
@@ -185,7 +184,7 @@ namespace ConsoleApp1
             {
                 currentCell.Val = "v";
             }
-            else if (direction == Direction.Left)
+            else if (direction == Direction.Right)
             {
                 currentCell.Val = ">";
             }
