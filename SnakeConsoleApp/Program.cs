@@ -13,7 +13,7 @@ namespace SnakeConsoleApp
         static readonly int gridH = 25;
         static readonly Cell[,] grid = new Cell[gridH, gridW];
         static readonly int speed = 1;
-        
+
         static Cell currentCell;
         static int snakeLength = 5;
         static bool lost;
@@ -24,7 +24,7 @@ namespace SnakeConsoleApp
             PopulateGrid();
 
             currentCell = grid[gridH / 2, gridW / 2];
-            
+
             UpdatePos();
             AddFood();
 
@@ -38,13 +38,11 @@ namespace SnakeConsoleApp
                 if (Console.KeyAvailable)
                 {
                     var input = Console.ReadKey();
-                    DoInput(input.KeyChar);
+                    ProcessInput(input.KeyChar);
                 }
-                else
-                {
-                    Move();
-                    PrintGrid();
-                }
+
+                MoveSnake();
+                PrintGrid();
             }
 
             Console.WriteLine("\nYou lost!");
@@ -68,7 +66,7 @@ namespace SnakeConsoleApp
             lost = true;
         }
 
-        static void DoInput(char inp)
+        static void ProcessInput(char inp)
         {
             switch (inp)
             {
@@ -90,9 +88,9 @@ namespace SnakeConsoleApp
         static void AddFood()
         {
             var random = new Random();
-            
+
             var cell = grid[random.Next(grid.GetLength(0) - 2) + 1, random.Next(grid.GetLength(1) - 2) + 1];
-            
+
             cell.Val = "%";
         }
 
@@ -104,34 +102,29 @@ namespace SnakeConsoleApp
 
         static void GoUp()
         {
-            if (direction == Direction.Down)
-                return;
-
-            direction = Direction.Up;
+            if (direction != Direction.Down)
+                direction = Direction.Up;
         }
 
         static void GoLeft()
         {
-            if (direction == Direction.Right)
-                return;
-            direction = Direction.Left;
+            if (direction != Direction.Right)
+                direction = Direction.Left;
         }
 
         static void GoDown()
         {
-            if (direction == Direction.Up)
-                return;
-            direction = Direction.Down;
+            if (direction != Direction.Up)
+                direction = Direction.Down;
         }
 
         static void GoRight()
         {
-            if (direction == Direction.Left)
-                return;
-            direction = Direction.Right;
+            if (direction != Direction.Left)
+                direction = Direction.Right;
         }
 
-        static void Move()
+        static void MoveSnake()
         {
             var nextCell = GetNextCell(direction);
 
@@ -166,7 +159,6 @@ namespace SnakeConsoleApp
 
         static void UpdatePos()
         {
-            currentCell.Set("@");
             if (direction == Direction.Up)
             {
                 currentCell.Val = "^";
@@ -193,7 +185,7 @@ namespace SnakeConsoleApp
             {
                 for (int row = 0; row < gridW; row++)
                 {
-                    Cell cell = new Cell
+                    var cell = new Cell
                     {
                         X = row,
                         Y = col,
