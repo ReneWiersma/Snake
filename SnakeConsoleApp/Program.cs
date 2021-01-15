@@ -97,7 +97,7 @@ namespace ConsoleApp1
         {
             var random = new Random();
             
-            var cell = grid[random.Next(grid.GetLength(0)), random.Next(grid.GetLength(1))];
+            var cell = grid[random.Next(grid.GetLength(0) - 2) + 1, random.Next(grid.GetLength(1) - 2) + 1];
             
             cell.Val = "%";
         }
