@@ -13,7 +13,7 @@ namespace ConsoleApp1
     {
         static readonly int gridW = 90;
         static readonly int gridH = 25;
-        static Cell[,] grid = new Cell[gridH, gridW];
+        static readonly Cell[,] grid = new Cell[gridH, gridW];
         static Cell currentCell;
         static int direction; //0=Up 1=Right 2=Down 3=Left
         static readonly int speed = 1;
@@ -21,12 +21,12 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            populateGrid();
+            PopulateGrid();
 
             currentCell = grid[(int)Math.Ceiling((double)gridH / 2), (int)Math.Ceiling((double)gridW / 2)];
             
-            updatePos();
-            addFood();
+            UpdatePos();
+            AddFood();
 
             while (true)
             {
@@ -36,36 +36,36 @@ namespace ConsoleApp1
 
         static void Restart()
         {
-            updateScreen();
-            getInput();
+            UpdateScreen();
+            GetInput();
         }
 
-        static void updateScreen()
+        static void UpdateScreen()
         {
             Console.SetCursorPosition(0, 0);
-            printGrid();
+            PrintGrid();
             Console.WriteLine("Length: {0}", snakeLength);
         }
 
-        static void getInput()
+        static void GetInput()
         {
             ConsoleKeyInfo input;
             while (!Console.KeyAvailable)
             {
                 Move();
-                updateScreen();
+                UpdateScreen();
             }
             input = Console.ReadKey();
-            doInput(input.KeyChar);
+            DoInput(input.KeyChar);
         }
 
-        static void checkCell(Cell cell)
+        static void CheckCell(Cell cell)
         {
-            if (cell.val == "%")
+            if (cell.Val == "%")
             {
-                eatFood();
+                EatFood();
             }
-            if (cell.visited)
+            if (cell.Visited)
             {
                 Lose();
             }
@@ -79,66 +79,66 @@ namespace ConsoleApp1
             Environment.Exit(-1);
         }
 
-        static void doInput(char inp)
+        static void DoInput(char inp)
         {
             switch (inp)
             {
                 case 'w':
-                    goUp();
+                    GoUp();
                     break;
                 case 's':
-                    goDown();
+                    GoDown();
                     break;
                 case 'a':
-                    goRight();
+                    GoRight();
                     break;
                 case 'd':
-                    goLeft();
+                    GoLeft();
                     break;
             }
         }
 
-        static void addFood()
+        static void AddFood()
         {
             Random r = new Random();
             Cell cell;
             while (true)
             {
                 cell = grid[r.Next(grid.GetLength(0)), r.Next(grid.GetLength(1))];
-                if (cell.val == " ")
-                    cell.val = "%";
+                if (cell.Val == " ")
+                    cell.Val = "%";
                 break;
             }
         }
 
-        static void eatFood()
+        static void EatFood()
         {
             snakeLength += 1;
-            addFood();
+            AddFood();
         }
 
-        static void goUp()
+        static void GoUp()
         {
             if (direction == 2)
                 return;
             direction = 0;
         }
 
-        static void goRight()
+        static void GoRight()
         {
             if (direction == 3)
                 return;
             direction = 1;
         }
 
-        static void goDown()
+        static void GoDown()
         {
             if (direction == 0)
                 return;
             direction = 2;
         }
 
-        static void goLeft()
+        static void GoLeft()
         {
             if (direction == 1)
                 return;
@@ -150,91 +150,93 @@ namespace ConsoleApp1
             if (direction == 0)
             {
                 //up
-                if (grid[currentCell.y - 1, currentCell.x].val == "*")
+                if (grid[currentCell.Y - 1, currentCell.X].Val == "*")
                 {
                     Lose();
                     return;
                 }
-                visitCell(grid[currentCell.y - 1, currentCell.x]);
+                VisitCell(grid[currentCell.Y - 1, currentCell.X]);
             }
             else if (direction == 1)
             {
                 //right
-                if (grid[currentCell.y, currentCell.x - 1].val == "*")
+                if (grid[currentCell.Y, currentCell.X - 1].Val == "*")
                 {
                     Lose();
                     return;
                 }
-                visitCell(grid[currentCell.y, currentCell.x - 1]);
+                VisitCell(grid[currentCell.Y, currentCell.X - 1]);
             }
             else if (direction == 2)
             {
                 //down
-                if (grid[currentCell.y + 1, currentCell.x].val == "*")
+                if (grid[currentCell.Y + 1, currentCell.X].Val == "*")
                 {
                     Lose();
                     return;
                 }
-                visitCell(grid[currentCell.y + 1, currentCell.x]);
+                VisitCell(grid[currentCell.Y + 1, currentCell.X]);
             }
             else if (direction == 3)
             {
                 //left
-                if (grid[currentCell.y, currentCell.x + 1].val == "*")
+                if (grid[currentCell.Y, currentCell.X + 1].Val == "*")
                 {
                     Lose();
                     return;
                 }
-                visitCell(grid[currentCell.y, currentCell.x + 1]);
+                VisitCell(grid[currentCell.Y, currentCell.X + 1]);
             }
             Thread.Sleep(speed * 100);
         }
 
-        static void visitCell(Cell cell)
+        static void VisitCell(Cell cell)
         {
-            currentCell.val = "#";
-            currentCell.visited = true;
-            currentCell.decay = snakeLength;
-            checkCell(cell);
+            currentCell.Val = "#";
+            currentCell.Visited = true;
+            currentCell.Decay = snakeLength;
+            CheckCell(cell);
             currentCell = cell;
-            updatePos();
+            UpdatePos();
         }
 
-        static void updatePos()
+        static void UpdatePos()
         {
             currentCell.Set("@");
             if (direction == 0)
             {
-                currentCell.val = "^";
+                currentCell.Val = "^";
             }
             else if (direction == 1)
             {
-                currentCell.val = "<";
+                currentCell.Val = "<";
             }
             else if (direction == 2)
             {
-                currentCell.val = "v";
+                currentCell.Val = "v";
             }
             else if (direction == 3)
             {
-                currentCell.val = ">";
+                currentCell.Val = ">";
             }
 
-            currentCell.visited = false;
+            currentCell.Visited = false;
             return;
         }
 
-        static void populateGrid()
+        static void PopulateGrid()
         {
             for (int col = 0; col < gridH; col++)
             {
                 for (int row = 0; row < gridW; row++)
                 {
-                    Cell cell = new Cell();
-                    cell.x = row;
-                    cell.y = col;
-                    cell.visited = false;
-                    if (cell.x == 0 || cell.x > gridW - 2 || cell.y == 0 || cell.y > gridH - 2)
+                    Cell cell = new Cell
+                    {
+                        X = row,
+                        Y = col,
+                        Visited = false
+                    };
+                    if (cell.X == 0 || cell.X > gridW - 2 || cell.Y == 0 || cell.Y > gridH - 2)
                         cell.Set("*");
                     else
                         cell.Clear();
@@ -243,15 +245,15 @@ namespace ConsoleApp1
             }
         }
 
-        static void printGrid()
+        static void PrintGrid()
         {
             string toPrint = "";
             for (int col = 0; col < gridH; col++)
             {
                 for (int row = 0; row < gridW; row++)
                 {
-                    grid[col, row].decaySnake();
-                    toPrint += grid[col, row].val;
+                    grid[col, row].DecaySnake();
+                    toPrint += grid[col, row].Val;
 
                 }
                 toPrint += "\n";
@@ -260,50 +262,50 @@ namespace ConsoleApp1
         }
         public class Cell
         {
-            public string val
+            public string Val
             {
                 get;
                 set;
             }
-            public int x
+            public int X
             {
                 get;
                 set;
             }
-            public int y
+            public int Y
             {
                 get;
                 set;
             }
-            public bool visited
+            public bool Visited
             {
                 get;
                 set;
             }
-            public int decay
+            public int Decay
             {
                 get;
                 set;
             }
 
-            public void decaySnake()
+            public void DecaySnake()
             {
-                decay -= 1;
-                if (decay == 0)
+                Decay -= 1;
+                if (Decay == 0)
                 {
-                    visited = false;
-                    val = " ";
+                    Visited = false;
+                    Val = " ";
                 }
             }
 
             public void Clear()
             {
-                val = " ";
+                Val = " ";
             }
 
             public void Set(string newVal)
             {
-                val = newVal;
+                Val = newVal;
             }
         }
     }
