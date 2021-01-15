@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace ConsoleApp1
@@ -7,17 +8,22 @@ namespace ConsoleApp1
     /// Original code based on code review request by user Terradice on StackExchange:
     /// https://codereview.stackexchange.com/questions/210835/console-snake-game-in-c
     /// </summary>
+    public enum Direction
+    { 
+        Up = 0, Right = 1, Down = 2, Left = 3
+    }
 
     class Program
     {
         static readonly int gridW = 90;
         static readonly int gridH = 25;
         static readonly Cell[,] grid = new Cell[gridH, gridW];
-        static Cell currentCell;
-        static int direction; //0=Up 1=Right 2=Down 3=Left
         static readonly int speed = 1;
+        
+        static Cell currentCell;
         static int snakeLength = 5;
         static bool lost;
+        static Direction direction = Direction.Up;
 
         static void Main(string[] args)
         {
@@ -93,8 +99,7 @@ namespace ConsoleApp1
             
             var cell = grid[random.Next(grid.GetLength(0)), random.Next(grid.GetLength(1))];
             
-            if (cell.Val == " ")
-                cell.Val = "%";
+            cell.Val = "%";
         }
 
         static void EatFood()
@@ -105,37 +110,37 @@ namespace ConsoleApp1
 
         static void GoUp()
         {
-            if (direction == 2)
+            if (direction == Direction.Down)
                 return;
-            direction = 0;
+
+            direction = Direction.Up;
         }
 
         static void GoRight()
         {
-            if (direction == 3)
+            if (direction == Direction.Left)
                 return;
-            direction = 1;
+            direction = Direction.Right;
         }
 
         static void GoDown()
         {
-            if (direction == 0)
+            if (direction == Direction.Up)
                 return;
-            direction = 2;
+            direction = Direction.Down;
         }
 
         static void GoLeft()
         {
-            if (direction == 1)
+            if (direction == Direction.Right)
                 return;
-            direction = 3;
+            direction = Direction.Left;
         }
 
         static void Move()
         {
-            if (direction == 0)
+            if (direction == Direction.Up)
             {
-                //up
                 if (grid[currentCell.Y - 1, currentCell.X].Val == "*")
                 {
                     Lose();
@@ -143,9 +148,8 @@ namespace ConsoleApp1
                 }
                 VisitCell(grid[currentCell.Y - 1, currentCell.X]);
             }
-            else if (direction == 1)
+            else if (direction == Direction.Right)
             {
-                //right
                 if (grid[currentCell.Y, currentCell.X - 1].Val == "*")
                 {
                     Lose();
@@ -153,9 +157,8 @@ namespace ConsoleApp1
                 }
                 VisitCell(grid[currentCell.Y, currentCell.X - 1]);
             }
-            else if (direction == 2)
+            else if (direction == Direction.Down)
             {
-                //down
                 if (grid[currentCell.Y + 1, currentCell.X].Val == "*")
                 {
                     Lose();
@@ -163,9 +166,8 @@ namespace ConsoleApp1
                 }
                 VisitCell(grid[currentCell.Y + 1, currentCell.X]);
             }
-            else if (direction == 3)
+            else if (direction == Direction.Left)
             {
-                //left
                 if (grid[currentCell.Y, currentCell.X + 1].Val == "*")
                 {
                     Lose();
@@ -189,19 +191,19 @@ namespace ConsoleApp1
         static void UpdatePos()
         {
             currentCell.Set("@");
-            if (direction == 0)
+            if (direction == Direction.Up)
             {
                 currentCell.Val = "^";
             }
-            else if (direction == 1)
+            else if (direction == Direction.Right)
             {
                 currentCell.Val = "<";
             }
-            else if (direction == 2)
+            else if (direction == Direction.Down)
             {
                 currentCell.Val = "v";
             }
-            else if (direction == 3)
+            else if (direction == Direction.Left)
             {
                 currentCell.Val = ">";
             }
