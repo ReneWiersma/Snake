@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
@@ -14,13 +11,10 @@ namespace ConsoleApp1
 
     class Program
     {
-
         static readonly int gridW = 90;
         static readonly int gridH = 25;
         static Cell[,] grid = new Cell[gridH, gridW];
         static Cell currentCell;
-        static Cell food;
-        static int FoodCount;
         static int direction; //0=Up 1=Right 2=Down 3=Left
         static readonly int speed = 1;
         static bool Populated = false;
@@ -31,7 +25,6 @@ namespace ConsoleApp1
         {
             if (!Populated)
             {
-                FoodCount = 0;
                 snakeLength = 5;
                 populateGrid();
                 currentCell = grid[(int)Math.Ceiling((double)gridH / 2), (int)Math.Ceiling((double)gridW / 2)];
@@ -63,8 +56,6 @@ namespace ConsoleApp1
 
         static void getInput()
         {
-
-            //Console.Write("Where to move? [WASD] ");
             ConsoleKeyInfo input;
             while (!Console.KeyAvailable)
             {
@@ -214,13 +205,10 @@ namespace ConsoleApp1
             checkCell(cell);
             currentCell = cell;
             updatePos();
-
-            //checkCell(currentCell);
         }
 
         static void updatePos()
         {
-
             currentCell.Set("@");
             if (direction == 0)
             {
@@ -245,7 +233,6 @@ namespace ConsoleApp1
 
         static void populateGrid()
         {
-            Random random = new Random();
             for (int col = 0; col < gridH; col++)
             {
                 for (int row = 0; row < gridW; row++)
