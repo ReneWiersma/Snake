@@ -25,12 +25,18 @@ namespace SnakeConsoleApp
         public bool IsAt(Position nextPosition) => 
             parts.Any(position => position.Equals(nextPosition));
 
-        internal void Draw(string snakeHead)
+        public void Draw(string snakeHead)
         {
-            foreach (var pos in parts)
+            for (int i = 0; i < parts.Count; i++)
             {
+                var pos = parts[i];
+
                 Console.SetCursorPosition(pos.X, pos.Y);
-                Console.Write("#");
+
+                if (i == 0)
+                    Console.Write(snakeHead);
+                else
+                    Console.Write("#");
             }
         }
 
