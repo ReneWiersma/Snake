@@ -9,7 +9,7 @@
             Up, Left, Down, Right
         }
 
-        public static Movement Default => new Movement(Direction.Up);
+        public static Movement Create() => new Movement(Direction.Up);
 
         Movement(Direction direction)
         {

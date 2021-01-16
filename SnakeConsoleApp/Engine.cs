@@ -8,11 +8,11 @@ namespace SnakeConsoleApp
         const int speed = 1;
         
         readonly Grid grid = new Grid();
-
-        int snakeLength = 5;
+        
         bool lost;
 
-        Movement movement = Movement.Default;
+        Movement movement = Movement.Create();
+        Snake snake = Snake.Create();
 
         public Engine()
         {
@@ -62,11 +62,11 @@ namespace SnakeConsoleApp
 
             if (grid.IsFoodAt(nextPosition))
             {
-                snakeLength += 1;
+                snake = snake.Grow();
                 grid.AddFood();
             }
 
-            grid.MoveSnakeTo(nextPosition, snakeLength);
+            grid.MoveSnakeTo(snake, nextPosition);
         }
     }
 }

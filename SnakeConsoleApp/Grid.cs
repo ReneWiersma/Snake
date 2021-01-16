@@ -79,11 +79,11 @@ namespace SnakeConsoleApp
 
         public bool IsFoodAt(Position pos) => grid[pos.X, pos.Y].Symbol == "%";
 
-        public void MoveSnakeTo(Position position, int snakeLength)
+        public void MoveSnakeTo(Snake snake, Position position)
         {
             grid[CurrentPosition.X, CurrentPosition.Y].Symbol = "#";
             grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = true;
-            grid[CurrentPosition.X, CurrentPosition.Y].Decay = snakeLength;
+            grid[CurrentPosition.X, CurrentPosition.Y].Decay = snake.Length;
 
             CurrentPosition = position;
         }
