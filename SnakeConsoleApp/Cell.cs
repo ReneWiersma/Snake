@@ -29,15 +29,5 @@
                 Val = " ";
             }
         }
-
-        public void Clear()
-        {
-            Val = " ";
-        }
-
-        public void Set(string newVal)
-        {
-            Val = newVal;
-        }
     }
 }

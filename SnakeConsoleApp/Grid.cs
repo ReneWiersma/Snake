@@ -27,9 +27,9 @@ namespace SnakeConsoleApp
                     var cell = new Cell();
 
                     if (row == 0 || row > width - 2 || col == 0 || col > height - 2)
-                        cell.Set("*");
+                        cell.Val = "*";
                     else
-                        cell.Clear();
+                        cell.Val = " ";
 
                     grid[row, col] = cell;
                 }
