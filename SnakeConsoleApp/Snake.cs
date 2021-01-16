@@ -1,18 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SnakeConsoleApp
 {
     public class Snake
     {
-        public static Snake Create() => new Snake(length: 5);
-        
-        public int Length { get; }
+        private readonly List<Position> parts = new List<Position>();
 
-        Snake(int length)
+        public Snake(Position position, int length)
         {
-            Length = length;
+            for (int i = 0; i < length; i++)
+                parts.Add(position.Down(i));
         }
 
-        public Snake Grow() => new Snake(Length + 1);
+        public Position CurrentPosition => parts[0];
+
+        public Snake Grow(Position position)
+        {
+            parts.Insert(0, position);
+            return this;
+        }
+
+        public bool IsAt(Position nextPosition) => 
+            parts.Any(position => position.Equals(nextPosition));
+
+        internal void Draw(string snakeHead)
+        {
+            foreach (var pos in parts)
+            {
+                Console.SetCursorPosition(pos.X, pos.Y);
+                Console.Write("#");
+            }
+        }
+
+        public void MoveTo(Position position)
+        {
+            parts.Insert(0, position);
+            parts.RemoveAt(parts.Count - 1);
+        }
     }
 }

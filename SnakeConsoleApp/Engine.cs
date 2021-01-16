@@ -10,7 +10,7 @@ namespace SnakeConsoleApp
         readonly Grid grid = new Grid();
         
         Movement movement = Movement.Create();
-        Snake snake = Snake.Create();
+        Snake snake = new Snake(new Position(45, 12), 5);
         Food food;
 
         bool lost;
@@ -32,10 +32,10 @@ namespace SnakeConsoleApp
                     movement = ProcessInput(input.KeyChar);
                 }
 
-                MoveSnake();
+                CheckCollisions();
 
-                grid.SnakeHead(movement.SnakeHead);
                 grid.Draw();
+                snake.Draw(movement.SnakeHead);
                 food.Draw();
 
                 Console.SetCursorPosition(0, 25);
@@ -56,11 +56,11 @@ namespace SnakeConsoleApp
             _ => movement,
         };
 
-        void MoveSnake()
+        void CheckCollisions()
         {
-            var nextPosition = movement.NextPosition(grid.CurrentPosition);
+            var nextPosition = movement.NextPosition(snake.CurrentPosition);
 
-            if (grid.IsWallAt(nextPosition) || grid.IsSnakeAt(nextPosition))
+            if (grid.IsWallAt(nextPosition) || snake.IsAt(nextPosition))
             {
                 lost = true;
                 return;
@@ -68,11 +68,13 @@ namespace SnakeConsoleApp
 
             if (food.IsAt(nextPosition))
             {
-                snake = snake.Grow();
+                snake = snake.Grow(nextPosition);
                 food = new Food(grid.RandomPosition);
             }
 
-            grid.MoveSnakeTo(snake, nextPosition);
+            snake.MoveTo(nextPosition);
+
+            //grid.MoveSnakeTo(snake, nextPosition);
         }
     }
 }
