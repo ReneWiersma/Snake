@@ -45,5 +45,14 @@ namespace SnakeConsoleApp
             parts.Insert(0, position);
             parts.RemoveAt(parts.Count - 1);
         }
+
+        public void Clear()
+        {
+            foreach (var pos in parts)
+            {
+                Console.SetCursorPosition(pos.X, pos.Y);
+                Console.Write(" ");
+            }
+        }
     }
 }

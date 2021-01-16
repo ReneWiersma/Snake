@@ -24,6 +24,8 @@ namespace SnakeConsoleApp
         public void Run()
         {
             Console.CursorVisible = false;
+            
+            grid.Draw();
 
             while (!lost)
             {
@@ -35,7 +37,6 @@ namespace SnakeConsoleApp
 
                 CheckCollisions();
 
-                grid.Draw();
                 snake.Draw(movement.SnakeHead);
                 food.Draw();
 
@@ -71,8 +72,10 @@ namespace SnakeConsoleApp
             {
                 snake = snake.Grow(nextPosition);
                 food = new Food(grid.RandomPosition);
+                return;
             }
 
+            snake.Clear();
             snake.MoveTo(nextPosition);
         }
     }
