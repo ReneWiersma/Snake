@@ -27,9 +27,9 @@ namespace SnakeConsoleApp
                     var cell = new Cell();
 
                     if (IsEdge(col, row))
-                        cell.Val = "*";
+                        cell.Symbol = "*";
                     else
-                        cell.Val = " ";
+                        cell.Symbol = " ";
 
                     grid[row, col] = cell;
                 }
@@ -40,7 +40,7 @@ namespace SnakeConsoleApp
 
         public void SetSnakeHead(string symbol)
         {
-            grid[CurrentPosition.X, CurrentPosition.Y].Val = symbol;
+            grid[CurrentPosition.X, CurrentPosition.Y].Symbol = symbol;
             grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = false;
         }
 
@@ -55,7 +55,7 @@ namespace SnakeConsoleApp
                 for (int row = 0; row < width; row++)
                 {
                     grid[row, col].DecaySnake();
-                    toPrint += grid[row, col].Val;
+                    toPrint += grid[row, col].Symbol;
                 }
 
                 toPrint += "\n";
@@ -70,18 +70,18 @@ namespace SnakeConsoleApp
 
             var cell = grid[random.Next(grid.GetLength(0) - 2) + 1, random.Next(grid.GetLength(1) - 2) + 1];
 
-            cell.Val = "%";
+            cell.Symbol = "%";
         }
 
-        public bool IsWallAt(Position pos) => grid[pos.X, pos.Y].Val == "*";
+        public bool IsWallAt(Position pos) => grid[pos.X, pos.Y].Symbol == "*";
 
         public bool IsSnakeAt(Position pos) => grid[pos.X, pos.Y].IsSnakeTail;
 
-        public bool IsFoodAt(Position pos) => grid[pos.X, pos.Y].Val == "%";
+        public bool IsFoodAt(Position pos) => grid[pos.X, pos.Y].Symbol == "%";
 
         public void MoveSnakeTo(Position position, int snakeLength)
         {
-            grid[CurrentPosition.X, CurrentPosition.Y].Val = "#";
+            grid[CurrentPosition.X, CurrentPosition.Y].Symbol = "#";
             grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = true;
             grid[CurrentPosition.X, CurrentPosition.Y].Decay = snakeLength;
 

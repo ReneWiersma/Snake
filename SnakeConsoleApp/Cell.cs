@@ -2,7 +2,7 @@
 {
     public class Cell
     {
-        public string Val
+        public string Symbol
         {
             get;
             set;
@@ -26,7 +26,7 @@
             if (Decay == 0)
             {
                 IsSnakeTail = false;
-                Val = " ";
+                Symbol = " ";
             }
         }
     }
