@@ -41,7 +41,6 @@ namespace SnakeConsoleApp
         public void SetSnakeHead(string symbol)
         {
             grid[CurrentPosition.X, CurrentPosition.Y].Symbol = symbol;
-            grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = false;
         }
 
         public void PrintGrid()
@@ -75,14 +74,14 @@ namespace SnakeConsoleApp
 
         public bool IsWallAt(Position pos) => grid[pos.X, pos.Y].Symbol == "*";
 
-        public bool IsSnakeAt(Position pos) => grid[pos.X, pos.Y].IsSnakeTail;
+        public bool IsSnakeAt(Position pos) => grid[pos.X, pos.Y].IsSnake;
 
         public bool IsFoodAt(Position pos) => grid[pos.X, pos.Y].Symbol == "%";
 
         public void MoveSnakeTo(Snake snake, Position position)
         {
             grid[CurrentPosition.X, CurrentPosition.Y].Symbol = "#";
-            grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = true;
+            grid[CurrentPosition.X, CurrentPosition.Y].IsSnake = true;
             grid[CurrentPosition.X, CurrentPosition.Y].Decay = snake.Length;
 
             CurrentPosition = position;

@@ -8,7 +8,7 @@
             set;
         }
 
-        public bool IsSnakeTail
+        public bool IsSnake
         {
             get;
             set;
@@ -25,7 +25,7 @@
             Decay -= 1;
             if (Decay == 0)
             {
-                IsSnakeTail = false;
+                IsSnake = false;
                 Symbol = " ";
             }
         }
