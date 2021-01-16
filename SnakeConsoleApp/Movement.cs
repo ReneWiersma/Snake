@@ -39,12 +39,12 @@
             _ => false,
         };
 
-        public (int x, int y) NextPosition(int x, int y) => direction switch
+        public Position NextPosition(Position position) => direction switch
         {
-            Direction.Left => (x - 1, y),
-            Direction.Down => (x, y + 1),
-            Direction.Right => (x + 1, y),
-            _ => (x, y - 1),
+            Direction.Left => position.Left(),
+            Direction.Down => position.Down(),
+            Direction.Right => position.Right(),
+            _ => position.Up(),
         };
 
         public string SnakeHead => direction switch

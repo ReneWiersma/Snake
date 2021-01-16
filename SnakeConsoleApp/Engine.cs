@@ -69,18 +69,18 @@ namespace SnakeConsoleApp
 
         void MoveSnake()
         {
-            var (x, y) = movement.NextPosition(grid.CurrentCell.X, grid.CurrentCell.Y);
+            var nextPosition = movement.NextPosition(grid.CurrentPosition);
 
-            if (grid.IsWallAt(x, y) || grid.IsSnakeAt(x, y))
+            if (grid.IsWallAt(nextPosition) || grid.IsSnakeAt(nextPosition))
             {
                 lost = true;
                 return;
             }
 
-            if (grid.IsFoodAt(x, y))
+            if (grid.IsFoodAt(nextPosition))
                 EatFood();
 
-            grid.MoveSnakeTo(x, y, snakeLength);
+            grid.MoveSnakeTo(nextPosition, snakeLength);
         }
     }
 }

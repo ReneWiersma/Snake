@@ -6,16 +6,17 @@ namespace SnakeConsoleApp
     {
         const int width = 90;
         const int height = 25;
+
         readonly Cell[,] grid = new Cell[width, height];
 
         public Grid()
         {
             InitGrid();
 
-            CurrentCell = grid[width / 2, height / 2];
+            CurrentPosition = new Position(width / 2, height / 2);
         }
 
-        public Cell CurrentCell { get; private set; }
+        public Position CurrentPosition { get; private set; }
 
         private void InitGrid()
         {
@@ -42,8 +43,8 @@ namespace SnakeConsoleApp
 
         public void UpdatePos(string symbol)
         {
-            CurrentCell.Val = symbol;
-            CurrentCell.IsSnakeTail = false;
+            grid[CurrentPosition.X, CurrentPosition.Y].Val = symbol;
+            grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = false;
         }
 
         public void PrintGrid()
@@ -75,19 +76,19 @@ namespace SnakeConsoleApp
             cell.Val = "%";
         }
 
-        public bool IsWallAt(int x, int y) => grid[x, y].Val == "*";
+        public bool IsWallAt(Position pos) => grid[pos.X, pos.Y].Val == "*";
 
-        public bool IsSnakeAt(int x, int y) => grid[x, y].IsSnakeTail;
+        public bool IsSnakeAt(Position pos) => grid[pos.X, pos.Y].IsSnakeTail;
 
-        public bool IsFoodAt(int x, int y) => grid[x, y].Val == "%";
+        public bool IsFoodAt(Position pos) => grid[pos.X, pos.Y].Val == "%";
 
-        public void MoveSnakeTo(int x, int y, int snakeLength)
+        public void MoveSnakeTo(Position position, int snakeLength)
         {
-            CurrentCell.Val = "#";
-            CurrentCell.IsSnakeTail = true;
-            CurrentCell.Decay = snakeLength;
+            grid[CurrentPosition.X, CurrentPosition.Y].Val = "#";
+            grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = true;
+            grid[CurrentPosition.X, CurrentPosition.Y].Decay = snakeLength;
 
-            CurrentCell = grid[x, y];
+            CurrentPosition = position;
         }
     }
 }
