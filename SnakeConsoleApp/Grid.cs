@@ -8,6 +8,7 @@ namespace SnakeConsoleApp
         const int height = 25;
 
         readonly Cell[,] grid = new Cell[width, height];
+        readonly Random random = new();
 
         public Grid()
         {
@@ -17,6 +18,9 @@ namespace SnakeConsoleApp
         }
 
         public Position CurrentPosition { get; private set; }
+
+        public Position RandomPosition =>
+            new Position(random.Next(width - 2) + 1, random.Next(height - 2) + 1);
 
         private void InitGrid()
         {
@@ -36,7 +40,8 @@ namespace SnakeConsoleApp
             }
         }
 
-        private static bool IsEdge(int col, int row) => row == 0 || row > width - 2 || col == 0 || col > height - 2;
+        private static bool IsEdge(int col, int row) => 
+            row is 0 or width - 1 || col is 0 or height - 1;
 
         public void SnakeHead(string symbol)
         {
@@ -61,15 +66,6 @@ namespace SnakeConsoleApp
             }
 
             Console.WriteLine(toPrint);
-        }
-
-        public void AddFood()
-        {
-            var random = new Random();
-
-            var cell = grid[random.Next(grid.GetLength(0) - 2) + 1, random.Next(grid.GetLength(1) - 2) + 1];
-
-            cell.Symbol = "%";
         }
 
         public bool IsWallAt(Position pos) => grid[pos.X, pos.Y].Symbol == "*";
