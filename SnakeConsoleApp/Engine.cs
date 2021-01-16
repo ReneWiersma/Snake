@@ -12,15 +12,13 @@ namespace SnakeConsoleApp
         bool lost;
         Movement movement = Movement.Default;
 
-        public void Run()
+        public Engine()
         {
             grid.UpdatePos(movement.SnakeHead);
             grid.AddFood();
-
-            PlayGame();
         }
 
-        void PlayGame()
+        public void Run()
         {
             while (!lost)
             {
@@ -38,7 +36,7 @@ namespace SnakeConsoleApp
                 Thread.Sleep(speed * 100);
             }
 
-            Console.WriteLine("\nYou lost!");
+            Console.WriteLine("You lost!");
             Console.ReadKey();
         }
 
