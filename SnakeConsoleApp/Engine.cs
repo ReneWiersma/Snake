@@ -10,7 +10,7 @@ namespace SnakeConsoleApp
         readonly Grid grid = new Grid();
         
         Movement movement = Movement.Create();
-        Snake snake = new Snake(new Position(45, 12), 5);
+        Snake snake;
         Food food;
 
         bool lost;
@@ -18,6 +18,7 @@ namespace SnakeConsoleApp
         public Engine()
         {
             food = new Food(grid.RandomPosition);
+            snake = new Snake(grid.Center, length: 5);
         }
 
         public void Run()
@@ -73,8 +74,6 @@ namespace SnakeConsoleApp
             }
 
             snake.MoveTo(nextPosition);
-
-            //grid.MoveSnakeTo(snake, nextPosition);
         }
     }
 }

@@ -13,14 +13,12 @@ namespace SnakeConsoleApp
         public Grid()
         {
             InitGrid();
-
-            //CurrentPosition = new Position(width / 2, height / 2);
         }
-
-        //public Position CurrentPosition { get; private set; }
 
         public Position RandomPosition =>
             new Position(random.Next(width - 2) + 1, random.Next(height - 2) + 1);
+
+        public Position Center => new Position(width / 2, height / 2);
 
         private void InitGrid()
         {
@@ -43,10 +41,6 @@ namespace SnakeConsoleApp
         private static bool IsEdge(int col, int row) => 
             row is 0 or width - 1 || col is 0 or height - 1;
 
-        //public void SnakeHead(string symbol)
-        //{
-        //    grid[CurrentPosition.X, CurrentPosition.Y].Symbol = symbol;
-        //}
 
         public void Draw()
         {
@@ -58,7 +52,6 @@ namespace SnakeConsoleApp
             {
                 for (int row = 0; row < width; row++)
                 {
-                    grid[row, col].DecaySnake();
                     toPrint += grid[row, col].Symbol;
                 }
 
@@ -69,14 +62,5 @@ namespace SnakeConsoleApp
         }
 
         public bool IsWallAt(Position pos) => grid[pos.X, pos.Y].Symbol == "*";
-
-        //public void MoveSnakeTo(Snake snake, Position position)
-        //{
-        //    grid[CurrentPosition.X, CurrentPosition.Y].Symbol = "#";
-        //    grid[CurrentPosition.X, CurrentPosition.Y].IsSnake = true;
-        //    grid[CurrentPosition.X, CurrentPosition.Y].Decay = snake.Length;
-
-        //    CurrentPosition = position;
-        //}
     }
 }
