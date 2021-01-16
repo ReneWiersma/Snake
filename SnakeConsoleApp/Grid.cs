@@ -4,24 +4,24 @@ namespace SnakeConsoleApp
 {
     public class Grid
     {
-        const int gridW = 90;
-        const int gridH = 25;
-        readonly Cell[,] grid = new Cell[gridW, gridH];
+        const int width = 90;
+        const int height = 25;
+        readonly Cell[,] grid = new Cell[width, height];
 
         public Grid()
         {
             InitGrid();
 
-            CurrentCell = grid[gridW / 2, gridH / 2];
+            CurrentCell = grid[width / 2, height / 2];
         }
 
         public Cell CurrentCell { get; private set; }
 
         private void InitGrid()
         {
-            for (int col = 0; col < gridH; col++)
+            for (int col = 0; col < height; col++)
             {
-                for (int row = 0; row < gridW; row++)
+                for (int row = 0; row < width; row++)
                 {
                     var cell = new Cell
                     {
@@ -30,7 +30,7 @@ namespace SnakeConsoleApp
                         Visited = false
                     };
 
-                    if (cell.X == 0 || cell.X > gridW - 2 || cell.Y == 0 || cell.Y > gridH - 2)
+                    if (cell.X == 0 || cell.X > width - 2 || cell.Y == 0 || cell.Y > height - 2)
                         cell.Set("*");
                     else
                         cell.Clear();
@@ -52,9 +52,9 @@ namespace SnakeConsoleApp
 
             var toPrint = "";
 
-            for (int col = 0; col < gridH; col++)
+            for (int col = 0; col < height; col++)
             {
-                for (int row = 0; row < gridW; row++)
+                for (int row = 0; row < width; row++)
                 {
                     grid[row, col].DecaySnake();
                     toPrint += grid[row, col].Val;
