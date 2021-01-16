@@ -38,12 +38,12 @@ namespace SnakeConsoleApp
 
         private static bool IsEdge(int col, int row) => row == 0 || row > width - 2 || col == 0 || col > height - 2;
 
-        public void SetSnakeHead(string symbol)
+        public void SnakeHead(string symbol)
         {
             grid[CurrentPosition.X, CurrentPosition.Y].Symbol = symbol;
         }
 
-        public void PrintGrid()
+        public void Draw()
         {
             Console.SetCursorPosition(0, 0);
 

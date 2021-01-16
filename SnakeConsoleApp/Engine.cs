@@ -6,13 +6,13 @@ namespace SnakeConsoleApp
     public class Engine
     {
         const int speed = 1;
-        
+
         readonly Grid grid = new Grid();
         
-        bool lost;
-
         Movement movement = Movement.Create();
         Snake snake = Snake.Create();
+
+        bool lost;
 
         public Engine()
         {
@@ -31,8 +31,8 @@ namespace SnakeConsoleApp
 
                 MoveSnake();
 
-                grid.SetSnakeHead(movement.SnakeHead);
-                grid.PrintGrid();
+                grid.SnakeHead(movement.SnakeHead);
+                grid.Draw();
 
                 Thread.Sleep(speed * 100);
             }
