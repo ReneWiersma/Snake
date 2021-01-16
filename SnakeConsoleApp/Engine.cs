@@ -25,9 +25,12 @@ namespace SnakeConsoleApp
             Console.CursorVisible = false;
             
             grid.Draw();
+            food.Draw();
 
             while (!lost)
             {
+                Thread.Sleep(speed * 100);
+
                 if (Console.KeyAvailable)
                 {
                     var input = Console.ReadKey();
@@ -35,14 +38,27 @@ namespace SnakeConsoleApp
                     snake.ChangeDirection(direction);
                 }
 
-                CheckCollisions();
+                var nextPosition = snake.NextPosition();
 
-                snake.Draw();
-                food.Draw();
+                if (grid.IsWallAt(nextPosition) || snake.IsAt(nextPosition))
+                {
+                    lost = true;
+                }
+                else
+                {
+                    if (food.IsAt(nextPosition))
+                    {
+                        snake = snake.Grow(nextPosition);
+                        food = new Food(grid.RandomPosition);
+                        food.Draw();
+                    }
 
+                    snake.Clear();
+                    snake.MoveTo(nextPosition);
+                    snake.Draw();
+                }
+                
                 Console.SetCursorPosition(0, 25);
-
-                Thread.Sleep(speed * 100);
             }
 
             Console.WriteLine("You lost!");
@@ -60,23 +76,7 @@ namespace SnakeConsoleApp
 
         void CheckCollisions()
         {
-            var nextPosition = snake.NextPosition();
 
-            if (grid.IsWallAt(nextPosition) || snake.IsAt(nextPosition))
-            {
-                lost = true;
-                return;
-            }
-
-            if (food.IsAt(nextPosition))
-            {
-                snake = snake.Grow(nextPosition);
-                food = new Food(grid.RandomPosition);
-                return;
-            }
-
-            snake.Clear();
-            snake.MoveTo(nextPosition);
         }
     }
 }
