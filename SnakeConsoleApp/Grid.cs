@@ -27,7 +27,7 @@ namespace SnakeConsoleApp
                     {
                         X = row,
                         Y = col,
-                        Visited = false
+                        IsSnakeTail = false
                     };
 
                     if (cell.X == 0 || cell.X > width - 2 || cell.Y == 0 || cell.Y > height - 2)
@@ -43,7 +43,7 @@ namespace SnakeConsoleApp
         public void UpdatePos(string symbol)
         {
             CurrentCell.Val = symbol;
-            CurrentCell.Visited = false;
+            CurrentCell.IsSnakeTail = false;
         }
 
         public void PrintGrid()
@@ -77,14 +77,14 @@ namespace SnakeConsoleApp
 
         public bool IsWallAt(int x, int y) => grid[x, y].Val == "*";
 
-        public bool IsSnakeAt(int x, int y) => grid[x, y].Visited;
+        public bool IsSnakeAt(int x, int y) => grid[x, y].IsSnakeTail;
 
         public bool IsFoodAt(int x, int y) => grid[x, y].Val == "%";
 
         public void MoveSnakeTo(int x, int y, int snakeLength)
         {
             CurrentCell.Val = "#";
-            CurrentCell.Visited = true;
+            CurrentCell.IsSnakeTail = true;
             CurrentCell.Decay = snakeLength;
 
             CurrentCell = grid[x, y];

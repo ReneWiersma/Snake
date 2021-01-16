@@ -20,7 +20,7 @@
             set;
         }
 
-        public bool Visited
+        public bool IsSnakeTail
         {
             get;
             set;
@@ -37,7 +37,7 @@
             Decay -= 1;
             if (Decay == 0)
             {
-                Visited = false;
+                IsSnakeTail = false;
                 Val = " ";
             }
         }
