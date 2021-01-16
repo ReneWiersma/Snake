@@ -5,24 +5,17 @@ namespace SnakeConsoleApp
 {
     public class Engine
     {
-        const int gridW = 90;
-        const int gridH = 25;
-        readonly Cell[,] grid = new Cell[gridW, gridH];
+        readonly Grid grid = new Grid();
         readonly int speed = 1;
 
-        Cell currentCell;
         int snakeLength = 5;
         bool lost;
         Movement movement = Movement.Default;
 
         public void Run()
         {
-            PopulateGrid();
-
-            currentCell = grid[gridW / 2, gridH / 2];
-
-            UpdatePos();
-            AddFood();
+            grid.UpdatePos(movement.SnakeHead);
+            grid.AddFood();
 
             PlayGame();
         }
@@ -38,8 +31,9 @@ namespace SnakeConsoleApp
                 }
 
                 MoveSnake();
-                UpdatePos();
-                PrintGrid();
+
+                grid.UpdatePos(movement.SnakeHead);
+                grid.PrintGrid();
 
                 Thread.Sleep(speed * 100);
             }
@@ -72,89 +66,26 @@ namespace SnakeConsoleApp
             }
         }
 
-        void AddFood()
-        {
-            var random = new Random();
-
-            var cell = grid[random.Next(grid.GetLength(0) - 2) + 1, random.Next(grid.GetLength(1) - 2) + 1];
-
-            cell.Val = "%";
-        }
-
         void EatFood()
         {
             snakeLength += 1;
-            AddFood();
+            grid.AddFood();
         }
 
         void MoveSnake()
         {
-            var (x, y) = movement.NextPosition(currentCell.X, currentCell.Y);
-            var nextCell = grid[x, y];
+            var (x, y) = movement.NextPosition(grid.CurrentCell.X, grid.CurrentCell.Y);
 
-            if (nextCell.Val == "*" || nextCell.Visited)
+            if (grid.IsWallAt(x, y) || grid.IsSnakeAt(x, y))
             {
                 Lose();
                 return;
             }
 
-            if (nextCell.Val == "%")
+            if (grid.IsFoodAt(x, y))
                 EatFood();
 
-            currentCell.Val = "#";
-            currentCell.Visited = true;
-            currentCell.Decay = snakeLength;
-
-            currentCell = nextCell;
-        }
-
-        void UpdatePos()
-        {
-            currentCell.Val = movement.SnakeHead;
-            currentCell.Visited = false;
-        }
-
-        void PopulateGrid()
-        {
-            for (int col = 0; col < gridH; col++)
-            {
-                for (int row = 0; row < gridW; row++)
-                {
-                    var cell = new Cell
-                    {
-                        X = row,
-                        Y = col,
-                        Visited = false
-                    };
-
-                    if (cell.X == 0 || cell.X > gridW - 2 || cell.Y == 0 || cell.Y > gridH - 2)
-                        cell.Set("*");
-                    else
-                        cell.Clear();
-
-                    grid[row, col] = cell;
-                }
-            }
-        }
-
-        void PrintGrid()
-        {
-            Console.SetCursorPosition(0, 0);
-
-            var toPrint = "";
-
-            for (int col = 0; col < gridH; col++)
-            {
-                for (int row = 0; row < gridW; row++)
-                {
-                    grid[row, col].DecaySnake();
-                    toPrint += grid[row, col].Val;
-                }
-
-                toPrint += "\n";
-            }
-
-            Console.WriteLine(toPrint);
+            grid.MoveSnakeTo(x, y, snakeLength);
         }
     }
 }
