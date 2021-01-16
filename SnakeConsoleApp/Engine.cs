@@ -25,7 +25,7 @@ namespace SnakeConsoleApp
                 if (Console.KeyAvailable)
                 {
                     var input = Console.ReadKey();
-                    ProcessInput(input.KeyChar);
+                    movement = ProcessInput(input.KeyChar);
                 }
 
                 MoveSnake();
@@ -40,24 +40,14 @@ namespace SnakeConsoleApp
             Console.ReadKey();
         }
 
-        void ProcessInput(char inp)
+        Movement ProcessInput(char input) => input switch
         {
-            switch (inp)
-            {
-                case 'w':
-                    movement = movement.Up();
-                    break;
-                case 's':
-                    movement = movement.Down();
-                    break;
-                case 'a':
-                    movement = movement.Left();
-                    break;
-                case 'd':
-                    movement = movement.Right();
-                    break;
-            }
-        }
+            's' => movement.Down(),
+            'a' => movement.Left(),
+            'd' => movement.Right(),
+            'w' => movement.Up(),
+            _ => movement,
+        };
 
         void EatFood()
         {
