@@ -42,11 +42,6 @@ namespace SnakeConsoleApp
             Console.ReadKey();
         }
 
-        void Lose()
-        {
-            lost = true;
-        }
-
         void ProcessInput(char inp)
         {
             switch (inp)
@@ -78,7 +73,7 @@ namespace SnakeConsoleApp
 
             if (grid.IsWallAt(x, y) || grid.IsSnakeAt(x, y))
             {
-                Lose();
+                lost = true;
                 return;
             }
 
