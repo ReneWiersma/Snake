@@ -7,7 +7,7 @@ namespace SnakeConsoleApp
     {
         const int gridW = 90;
         const int gridH = 25;
-        readonly Cell[,] grid = new Cell[gridH, gridW];
+        readonly Cell[,] grid = new Cell[gridW, gridH];
         readonly int speed = 1;
 
         Cell currentCell;
@@ -19,7 +19,7 @@ namespace SnakeConsoleApp
         {
             PopulateGrid();
 
-            currentCell = grid[gridH / 2, gridW / 2];
+            currentCell = grid[gridW / 2, gridH / 2];
 
             UpdatePos();
             AddFood();
@@ -89,8 +89,8 @@ namespace SnakeConsoleApp
 
         void MoveSnake()
         {
-            var (y, x) = movement.NextPosition(currentCell.Y, currentCell.X);
-            var nextCell = grid[y, x];
+            var (x, y) = movement.NextPosition(currentCell.X, currentCell.Y);
+            var nextCell = grid[x, y];
 
             if (nextCell.Val == "*" || nextCell.Visited)
             {
@@ -126,11 +126,13 @@ namespace SnakeConsoleApp
                         Y = col,
                         Visited = false
                     };
+
                     if (cell.X == 0 || cell.X > gridW - 2 || cell.Y == 0 || cell.Y > gridH - 2)
                         cell.Set("*");
                     else
                         cell.Clear();
-                    grid[col, row] = cell;
+
+                    grid[row, col] = cell;
                 }
             }
         }
@@ -145,8 +147,8 @@ namespace SnakeConsoleApp
             {
                 for (int row = 0; row < gridW; row++)
                 {
-                    grid[col, row].DecaySnake();
-                    toPrint += grid[col, row].Val;
+                    grid[row, col].DecaySnake();
+                    toPrint += grid[row, col].Val;
                 }
 
                 toPrint += "\n";
