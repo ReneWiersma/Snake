@@ -24,14 +24,9 @@ namespace SnakeConsoleApp
             {
                 for (int row = 0; row < width; row++)
                 {
-                    var cell = new Cell
-                    {
-                        X = row,
-                        Y = col,
-                        IsSnakeTail = false
-                    };
+                    var cell = new Cell();
 
-                    if (cell.X == 0 || cell.X > width - 2 || cell.Y == 0 || cell.Y > height - 2)
+                    if (row == 0 || row > width - 2 || col == 0 || col > height - 2)
                         cell.Set("*");
                     else
                         cell.Clear();
