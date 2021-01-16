@@ -7,7 +7,7 @@ namespace SnakeConsoleApp
     /// Original code based on code review request by user Terradice on StackExchange:
     /// https://codereview.stackexchange.com/questions/210835/console-snake-game-in-c
     /// </summary>
-    partial class Program
+    public class Program
     {
         static readonly int gridW = 90;
         static readonly int gridH = 25;
