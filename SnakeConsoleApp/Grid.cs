@@ -41,7 +41,7 @@ namespace SnakeConsoleApp
             }
         }
 
-        public void UpdatePos(string symbol)
+        public void SetSnakeHead(string symbol)
         {
             grid[CurrentPosition.X, CurrentPosition.Y].Val = symbol;
             grid[CurrentPosition.X, CurrentPosition.Y].IsSnakeTail = false;

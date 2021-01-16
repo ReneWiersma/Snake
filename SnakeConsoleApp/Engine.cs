@@ -16,7 +16,6 @@ namespace SnakeConsoleApp
 
         public Engine()
         {
-            grid.UpdatePos(movement.SnakeHead);
             grid.AddFood();
         }
 
@@ -32,7 +31,7 @@ namespace SnakeConsoleApp
 
                 MoveSnake();
 
-                grid.UpdatePos(movement.SnakeHead);
+                grid.SetSnakeHead(movement.SnakeHead);
                 grid.PrintGrid();
 
                 Thread.Sleep(speed * 100);
