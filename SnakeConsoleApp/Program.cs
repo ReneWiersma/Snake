@@ -8,7 +8,11 @@
     {
         static void Main(string[] args)
         {
-            var engine = new Engine();
+            var grid = new Grid();
+            var food = new Food(grid.RandomPosition);
+            var snake = new Snake(grid.Center, length: 5);
+            var engine = new Engine(grid, snake, food);
+
             engine.Run();
         }
     }

@@ -4,7 +4,7 @@ namespace SnakeConsoleApp
 {
     public class Food
     {
-        private readonly Position position;
+        private Position position;
 
         public Food(Position position)
         {
@@ -17,6 +17,11 @@ namespace SnakeConsoleApp
         {
             Console.SetCursorPosition(position.X, position.Y);
             Console.Write('%');
+        }
+
+        public void Update(Position newPosition)
+        {
+            position = newPosition;
         }
     }
 }

@@ -7,17 +7,17 @@ namespace SnakeConsoleApp
     {
         const int speed = 1;
 
-        readonly Grid grid = new Grid();
-        
-        Snake snake;
-        Food food;
+        readonly Grid grid;
+        readonly Snake snake;
+        readonly Food food;
 
         bool lost;
 
-        public Engine()
+        public Engine(Grid grid, Snake snake, Food food)
         {
-            food = new Food(grid.RandomPosition);
-            snake = new Snake(grid.Center, length: 5);
+            this.grid = grid;
+            this.snake = snake;
+            this.food = food;
         }
 
         public void Run()
@@ -47,7 +47,7 @@ namespace SnakeConsoleApp
                     if (snake.Eats(food))
                     {
                         snake.Grow();
-                        food = new Food(grid.RandomPosition);
+                        food.Update(grid.RandomPosition);
                         food.Draw();
                     }
 
