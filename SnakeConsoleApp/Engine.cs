@@ -46,7 +46,7 @@ namespace SnakeConsoleApp
                 {
                     if (snake.Eats(food))
                     {
-                        snake = snake.Grow();
+                        snake.Grow();
                         food = new Food(grid.RandomPosition);
                         food.Draw();
                     }

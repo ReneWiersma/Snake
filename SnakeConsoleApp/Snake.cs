@@ -18,11 +18,7 @@ namespace SnakeConsoleApp
 
         Position CurrentPosition => parts[0];
 
-        public Snake Grow()
-        {
-            parts.Insert(0, NextPosition);
-            return this;
-        }
+        public void Grow() => parts.Insert(0, NextPosition);
 
         public bool IsAt(Position nextPosition) => 
             parts.Any(position => position.Equals(nextPosition));
