@@ -9,6 +9,11 @@ namespace SnakeConsoleApp
 
         readonly Random random = new();
 
+        public Grid()
+        {
+            Draw();
+        }
+
         public Position RandomPosition =>
             new Position(random.Next(width - 2) + 1, random.Next(height - 2) + 1);
 

@@ -24,9 +24,6 @@ namespace SnakeConsoleApp
         {
             Console.CursorVisible = false;
             
-            grid.Draw();
-            food.Draw();
-
             while (!lost)
             {
                 Thread.Sleep(speed * 100);
