@@ -9,9 +9,9 @@
         static void Main(string[] args)
         {
             var grid = new Grid();
-            var food = new Food(grid.RandomPosition);
-            var snake = new Snake(grid.Center, length: 5);
-            var engine = new Engine(grid, snake, food);
+            var food = new Food(grid);
+            var snake = new Snake(grid);
+            var engine = new Engine(snake, food);
 
             engine.Run();
         }

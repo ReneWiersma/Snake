@@ -6,14 +6,21 @@ namespace SnakeConsoleApp
 {
     public class Snake
     {
+        const int startLength = 5;
+
         private readonly List<Position> parts = new List<Position>();
+        private readonly Grid grid;
 
         private Direction direction = Direction.Up;
 
-        public Snake(Position position, int length)
+        public Snake(Grid grid)
         {
-            for (int i = 0; i < length; i++)
-                parts.Add(position.Down(i));
+            this.grid = grid;
+
+            var startPosition = grid.Center;
+
+            for (int i = 0; i < startLength; i++)
+                parts.Add(startPosition.Down(i));
         }
 
         Position CurrentPosition => parts[0];
@@ -40,7 +47,7 @@ namespace SnakeConsoleApp
 
         public bool Eats(Food food) => food.IsAt(NextPosition);
 
-        public bool Collides(Grid grid) => grid.IsWallAt(NextPosition) || this.IsAt(NextPosition);
+        public bool Collides => grid.IsWallAt(NextPosition) || this.IsAt(NextPosition);
 
         public void ChangeDirection(Direction newDirection)
         {
@@ -72,6 +79,13 @@ namespace SnakeConsoleApp
         };
 
         public void Move()
+        {
+            Clear();
+            UpdatePosition();
+            Draw();
+        }
+
+        private void UpdatePosition()
         {
             parts.Insert(0, NextPosition);
             parts.RemoveAt(parts.Count - 1);

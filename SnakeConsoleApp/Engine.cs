@@ -7,15 +7,13 @@ namespace SnakeConsoleApp
     {
         const int speed = 1;
 
-        readonly Grid grid;
         readonly Snake snake;
         readonly Food food;
 
         bool lost;
 
-        public Engine(Grid grid, Snake snake, Food food)
+        public Engine(Snake snake, Food food)
         {
-            this.grid = grid;
             this.snake = snake;
             this.food = food;
         }
@@ -35,7 +33,7 @@ namespace SnakeConsoleApp
                     snake.ChangeDirection(direction);
                 }
 
-                if (snake.Collides(grid))
+                if (snake.Collides)
                 {
                     lost = true;
                 }
@@ -44,13 +42,10 @@ namespace SnakeConsoleApp
                     if (snake.Eats(food))
                     {
                         snake.Grow();
-                        food.Update(grid.RandomPosition);
-                        food.Draw();
+                        food.New();
                     }
 
-                    snake.Clear();
                     snake.Move();
-                    snake.Draw();
                 }
                 
                 Console.SetCursorPosition(0, 25);

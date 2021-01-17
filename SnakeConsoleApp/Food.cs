@@ -5,25 +5,27 @@ namespace SnakeConsoleApp
     public class Food
     {
         private Position position;
+        private readonly Grid grid;
 
-        public Food(Position position)
+        public Food(Grid grid)
         {
-            this.position = position;
+            this.grid = grid;
 
-            Draw();
+            New();
         }
 
         public bool IsAt(Position other) => position.Equals(other);
 
-        public void Draw()
+        void Draw()
         {
             Console.SetCursorPosition(position.X, position.Y);
             Console.Write('%');
         }
 
-        public void Update(Position newPosition)
+        public void New()
         {
-            position = newPosition;
+            position = grid.RandomPosition;
+            Draw();
         }
     }
 }
