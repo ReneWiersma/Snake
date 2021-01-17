@@ -15,7 +15,7 @@ namespace SnakeConsoleApp
 
             if (Console.KeyAvailable)
             {
-                var input = Console.ReadKey();
+                var input = Console.ReadKey(intercept: true);
                 direction = ProcessInput(input.KeyChar);
                 return true;
             }

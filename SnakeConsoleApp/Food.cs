@@ -5,12 +5,12 @@ namespace SnakeConsoleApp
     public class Food
     {
         private Position position;
-        private readonly Maze maze;
+        private readonly FreePositions freePositions;
 
-        public Food(Maze maze)
+        public Food(FreePositions freePositions)
         {
-            this.maze = maze;
-
+            this.freePositions = freePositions;
+            
             Regenerate();
         }
 
@@ -24,7 +24,7 @@ namespace SnakeConsoleApp
 
         public void Regenerate()
         {
-            position = maze.RandomPosition;
+            position = freePositions.GetRandom();
             Draw();
         }
     }

@@ -13,8 +13,8 @@ namespace SnakeConsoleApp
             var input = new Input();
             var timer = new GameTimer();
             var maze = new Maze();
-            var food = new Food(maze);
             var snake = new Snake(maze);
+            var food = new Food(new FreePositions(maze, snake));
             var engine = new Engine(timer, input, snake, food);
 
             await engine.Run();
