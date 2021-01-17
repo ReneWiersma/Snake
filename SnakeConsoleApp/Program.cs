@@ -12,9 +12,9 @@ namespace SnakeConsoleApp
         {
             var input = new Input();
             var timer = new GameTimer();
-            var grid = new Grid();
-            var food = new Food(grid);
-            var snake = new Snake(grid);
+            var maze = new Maze();
+            var food = new Food(maze);
+            var snake = new Snake(maze);
             var engine = new Engine(timer, input, snake, food);
 
             await engine.Run();

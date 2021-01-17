@@ -38,7 +38,7 @@ namespace SnakeConsoleApp
                     if (snake.Eats(food))
                     {
                         snake.Grow();
-                        food.New();
+                        food.Regenerate();
                     }
 
                     snake.Move();

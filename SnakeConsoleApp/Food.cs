@@ -5,13 +5,13 @@ namespace SnakeConsoleApp
     public class Food
     {
         private Position position;
-        private readonly Grid grid;
+        private readonly Maze maze;
 
-        public Food(Grid grid)
+        public Food(Maze maze)
         {
-            this.grid = grid;
+            this.maze = maze;
 
-            New();
+            Regenerate();
         }
 
         public bool IsAt(Position other) => position.Equals(other);
@@ -22,9 +22,9 @@ namespace SnakeConsoleApp
             Console.Write('%');
         }
 
-        public void New()
+        public void Regenerate()
         {
-            position = grid.RandomPosition;
+            position = maze.RandomPosition;
             Draw();
         }
     }

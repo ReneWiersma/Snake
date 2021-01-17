@@ -9,15 +9,15 @@ namespace SnakeConsoleApp
         const int startLength = 5;
 
         private readonly List<Position> parts = new List<Position>();
-        private readonly Grid grid;
+        private readonly Maze maze;
 
         private Direction direction = Direction.Up;
 
-        public Snake(Grid grid)
+        public Snake(Maze maze)
         {
-            this.grid = grid;
+            this.maze = maze;
 
-            var startPosition = grid.Center;
+            var startPosition = maze.Center;
 
             for (int i = 0; i < startLength; i++)
                 parts.Add(startPosition.Down(i));
@@ -47,7 +47,7 @@ namespace SnakeConsoleApp
 
         public bool Eats(Food food) => food.IsAt(NextPosition);
 
-        public bool Collides => grid.IsWallAt(NextPosition) || this.IsAt(NextPosition);
+        public bool Collides => maze.IsWallAt(NextPosition) || this.IsAt(NextPosition);
 
         public void ChangeDirection(Direction newDirection)
         {

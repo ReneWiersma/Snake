@@ -2,14 +2,14 @@
 
 namespace SnakeConsoleApp
 {
-    public class Grid
+    public class Maze
     {
         const int width = 90;
         const int height = 25;
 
         readonly Random random = new();
 
-        public Grid()
+        public Maze()
         {
             Draw();
         }
