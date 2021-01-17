@@ -42,15 +42,9 @@ namespace SnakeConsoleApp
             }
         }
 
-        public bool Eats(Food food)
-        {
-            return food.IsAt(NextPosition);
-        }
+        public bool Eats(Food food) => food.IsAt(NextPosition);
 
-        public bool Collides(Grid grid)
-        {
-            return grid.IsWallAt(NextPosition) || this.IsAt(NextPosition);
-        }
+        public bool Collides(Grid grid) => grid.IsWallAt(NextPosition) || this.IsAt(NextPosition);
 
         public void ChangeDirection(Direction newDirection)
         {
