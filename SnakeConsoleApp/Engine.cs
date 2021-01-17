@@ -7,31 +7,27 @@ namespace SnakeConsoleApp
     {
         const int speed = 1;
 
+        readonly Input input;
         readonly Snake snake;
         readonly Food food;
 
         bool lost;
 
-        public Engine(Snake snake, Food food)
+        public Engine(Input input, Snake snake, Food food)
         {
+            this.input = input;
             this.snake = snake;
             this.food = food;
         }
 
         public void Run()
         {
-            Console.CursorVisible = false;
-            
             while (!lost)
             {
                 Thread.Sleep(speed * 100);
 
-                if (Console.KeyAvailable)
-                {
-                    var input = Console.ReadKey();
-                    var direction = ProcessInput(input.KeyChar);
+                if (input.TryGetDirection(out var direction))
                     snake.ChangeDirection(direction);
-                }
 
                 if (snake.Collides)
                 {
@@ -47,21 +43,10 @@ namespace SnakeConsoleApp
 
                     snake.Move();
                 }
-                
-                Console.SetCursorPosition(0, 25);
             }
 
             Console.WriteLine("You lost!");
             Console.ReadKey();
         }
-
-        Direction ProcessInput(char input) => input switch
-        {
-            's' => Direction.Down,
-            'a' => Direction.Left,
-            'd' => Direction.Right,
-            'w' => Direction.Up,
-            _ => Direction.Up,
-        };
     }
 }
