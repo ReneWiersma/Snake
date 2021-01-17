@@ -1,4 +1,6 @@
-﻿namespace SnakeConsoleApp
+﻿using System.Threading.Tasks;
+
+namespace SnakeConsoleApp
 {
     /// <summary>
     /// Original code based on code review request by user Terradice on StackExchange:
@@ -6,15 +8,16 @@
     /// </summary>
     public class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var input = new Input();
+            var timer = new GameTimer();
             var grid = new Grid();
             var food = new Food(grid);
             var snake = new Snake(grid);
-            var engine = new Engine(input, snake, food);
+            var engine = new Engine(timer, input, snake, food);
 
-            engine.Run();
+            await engine.Run();
         }
     }
 }

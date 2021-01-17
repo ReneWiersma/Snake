@@ -1,30 +1,30 @@
 ﻿using System;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace SnakeConsoleApp
 {
     public class Engine
     {
-        const int speed = 1;
-
+        readonly GameTimer timer;
         readonly Input input;
         readonly Snake snake;
         readonly Food food;
 
         bool lost;
 
-        public Engine(Input input, Snake snake, Food food)
+        public Engine(GameTimer timer, Input input, Snake snake, Food food)
         {
+            this.timer = timer;
             this.input = input;
             this.snake = snake;
             this.food = food;
         }
 
-        public void Run()
+        public async Task Run()
         {
             while (!lost)
             {
-                Thread.Sleep(speed * 100);
+                await timer.Pause();
 
                 if (input.TryGetDirection(out var direction))
                     snake.ChangeDirection(direction);
