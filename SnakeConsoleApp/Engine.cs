@@ -38,23 +38,21 @@ namespace SnakeConsoleApp
                     snake.ChangeDirection(direction);
                 }
 
-                var nextPosition = snake.NextPosition();
-
-                if (grid.IsWallAt(nextPosition) || snake.IsAt(nextPosition))
+                if (snake.Collides(grid))
                 {
                     lost = true;
                 }
                 else
                 {
-                    if (food.IsAt(nextPosition))
+                    if (snake.Eats(food))
                     {
-                        snake = snake.Grow(nextPosition);
+                        snake = snake.Grow();
                         food = new Food(grid.RandomPosition);
                         food.Draw();
                     }
 
                     snake.Clear();
-                    snake.MoveTo(nextPosition);
+                    snake.Move();
                     snake.Draw();
                 }
                 
@@ -73,10 +71,5 @@ namespace SnakeConsoleApp
             'w' => Direction.Up,
             _ => Direction.Up,
         };
-
-        void CheckCollisions()
-        {
-
-        }
     }
 }

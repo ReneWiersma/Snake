@@ -18,9 +18,9 @@ namespace SnakeConsoleApp
 
         Position CurrentPosition => parts[0];
 
-        public Snake Grow(Position position)
+        public Snake Grow()
         {
-            parts.Insert(0, position);
+            parts.Insert(0, NextPosition);
             return this;
         }
 
@@ -42,6 +42,16 @@ namespace SnakeConsoleApp
             }
         }
 
+        public bool Eats(Food food)
+        {
+            return food.IsAt(NextPosition);
+        }
+
+        public bool Collides(Grid grid)
+        {
+            return grid.IsWallAt(NextPosition) || this.IsAt(NextPosition);
+        }
+
         public void ChangeDirection(Direction newDirection)
         {
             if (RightAngled(newDirection))
@@ -55,7 +65,7 @@ namespace SnakeConsoleApp
             _ => false,
         };
 
-        public Position NextPosition() => direction switch
+        Position NextPosition => direction switch
         {
             Direction.Left => CurrentPosition.Left(),
             Direction.Down => CurrentPosition.Down(),
@@ -71,9 +81,9 @@ namespace SnakeConsoleApp
             _ => "^",
         };
 
-        public void MoveTo(Position position)
+        public void Move()
         {
-            parts.Insert(0, position);
+            parts.Insert(0, NextPosition);
             parts.RemoveAt(parts.Count - 1);
         }
 
