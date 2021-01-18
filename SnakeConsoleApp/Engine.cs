@@ -6,8 +6,8 @@ namespace SnakeConsoleApp
     public class Engine
     {
         private readonly GameState gameState;
-        readonly GameTimer timer;
-        readonly Input input;
+        private readonly GameTimer timer;
+        private readonly Input input;
 
         public Engine(GameState gameState, GameTimer timer, Input input)
         {
@@ -20,7 +20,7 @@ namespace SnakeConsoleApp
         {
             while (gameState.Continue)
             {
-                await timer.Pause();
+                await timer.Delay();
 
                 if (input.TryGetDirection(out var direction))
                     gameState.ChangeSnakeDirection(direction);

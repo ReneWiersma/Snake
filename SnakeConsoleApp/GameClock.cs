@@ -6,6 +6,6 @@ namespace SnakeConsoleApp
     {
         const int intervalMs = 100;
 
-        public async Task Pause() => await Task.Delay(intervalMs);
+        public async Task Delay() => await Task.Delay(intervalMs);
     }
 }
