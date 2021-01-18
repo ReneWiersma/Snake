@@ -2,9 +2,9 @@
 
 namespace SnakeConsoleApp
 {
-    public class Input
+    public class UserIO
     {
-        public Input()
+        public UserIO()
         {
             Console.CursorVisible = false;
         }
@@ -34,5 +34,11 @@ namespace SnakeConsoleApp
             'w' => Direction.Up,
             _ => Direction.Up,
         };
+
+        public void NotifyLoss()
+        {
+            Console.WriteLine("You lost!");
+            Console.ReadKey();
+        }
     }
 }

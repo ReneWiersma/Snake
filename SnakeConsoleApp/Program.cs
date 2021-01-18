@@ -10,14 +10,14 @@ namespace SnakeConsoleApp
     {
         static async Task Main(string[] args)
         {
-            var input = new Input();
-            var timer = new GameTimer();
+            var userIO = new UserIO();
+            var gameTimer = new GameTimer();
             var maze = new Maze();
             var snake = new Snake(maze);
             var freePositions = new FreePositions(maze, snake);
             var food = new Food(freePositions);
             var gameState = new GameState(snake, food);
-            var engine = new Engine(gameState, timer, input);
+            var engine = new Engine(gameState, gameTimer, userIO);
 
             await engine.Run();
         }
