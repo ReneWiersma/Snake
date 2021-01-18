@@ -9,9 +9,8 @@ namespace SnakeConsoleApp
         const int startLength = 5;
 
         private readonly List<Position> parts = new List<Position>();
+        private readonly SnakeDirection snakeDirection = new SnakeDirection();
         private readonly Maze maze;
-
-        private Direction direction = Direction.Up;
 
         public Snake(Maze maze)
         {
@@ -27,10 +26,10 @@ namespace SnakeConsoleApp
 
         public void Grow() => parts.Insert(0, NextPosition);
 
-        public bool IsAt(Position nextPosition) => 
+        public bool IsAt(Position nextPosition) =>
             parts.Any(position => position.Equals(nextPosition));
 
-        public void Draw()
+        private void Draw()
         {
             for (int i = 0; i < parts.Count; i++)
             {
@@ -39,7 +38,7 @@ namespace SnakeConsoleApp
                 Console.SetCursorPosition(pos.X, pos.Y);
 
                 if (i == 0)
-                    Console.Write(SnakeHead);
+                    Console.Write(snakeDirection.SnakeHead);
                 else
                     Console.Write("#");
             }
@@ -49,34 +48,9 @@ namespace SnakeConsoleApp
 
         public bool Collides => maze.IsWallAt(NextPosition) || this.IsAt(NextPosition);
 
-        public void ChangeDirection(Direction newDirection)
-        {
-            if (RightAngled(newDirection))
-                direction = newDirection;
-        }
+        public void ChangeDirection(Direction newDirection) => snakeDirection.Change(newDirection);
 
-        bool RightAngled(Direction newDirection) => direction switch
-        {
-            Direction.Left or Direction.Right => newDirection is Direction.Up or Direction.Down,
-            Direction.Up or Direction.Down => newDirection is Direction.Left or Direction.Right,
-            _ => false,
-        };
-
-        Position NextPosition => direction switch
-        {
-            Direction.Left => CurrentPosition.Left(),
-            Direction.Down => CurrentPosition.Down(),
-            Direction.Right => CurrentPosition.Right(),
-            _ => CurrentPosition.Up(),
-        };
-
-        string SnakeHead => direction switch
-        {
-            Direction.Left => "<",
-            Direction.Down => "v",
-            Direction.Right => ">",
-            _ => "^",
-        };
+        Position NextPosition => snakeDirection.NextPosition(CurrentPosition);
 
         public void Move()
         {
@@ -91,7 +65,7 @@ namespace SnakeConsoleApp
             parts.RemoveAt(parts.Count - 1);
         }
 
-        public void Clear()
+        private void Clear()
         {
             foreach (var pos in parts)
             {
