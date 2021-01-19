@@ -3,14 +3,14 @@
     public class Snake
     {
         private readonly SnakeBody snakeBody;
-        private readonly SnakeDirection snakeDirection = new SnakeDirection();
+        private readonly SnakeDirection snakeDirection;
         private readonly Maze maze;
 
-        public Snake(Maze maze)
+        public Snake(Maze maze, SnakeBody snakeBody, SnakeDirection snakeDirection)
         {
             this.maze = maze;
-
-            snakeBody = new SnakeBody(maze.Center, snakeLength: 5);
+            this.snakeBody = snakeBody;
+            this.snakeDirection = snakeDirection;
         }
 
         public void Grow() => snakeBody.Grow(NextPosition);
