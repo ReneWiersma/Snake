@@ -7,7 +7,6 @@ namespace SnakeConsoleApp
     {
         private readonly Random random = new();
 
-        private readonly List<Position> walls = new List<Position>();
         private readonly int height;
         private readonly int width;
 
@@ -16,13 +15,13 @@ namespace SnakeConsoleApp
             this.height = height;
             this.width = width;
 
-            InitMaze();
-
-            drawer.Draw(walls);
+            drawer.Draw(CreateWalls());
         }
 
-        private void InitMaze()
+        private IList<Position> CreateWalls()
         {
+            var walls = new List<Position>();
+            
             for (int col = 0; col < width; col++)
             {
                 for (int row = 0; row < height; row++)
@@ -31,6 +30,8 @@ namespace SnakeConsoleApp
                         walls.Add(new Position(col, row));
                 }
             }
+            
+            return walls;
         }
 
         public Position RandomPosition =>
