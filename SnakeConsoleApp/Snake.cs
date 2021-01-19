@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace SnakeConsoleApp
+﻿namespace SnakeConsoleApp
 {
     public class Snake
     {
-        const int startLength = 5;
-
-        private readonly List<Position> parts = new List<Position>();
+        private readonly SnakeBody snakeBody;
         private readonly SnakeDirection snakeDirection = new SnakeDirection();
         private readonly Maze maze;
 
@@ -16,62 +10,21 @@ namespace SnakeConsoleApp
         {
             this.maze = maze;
 
-            var startPosition = maze.Center;
-
-            for (int i = 0; i < startLength; i++)
-                parts.Add(startPosition.Down(i));
+            snakeBody = new SnakeBody(maze.Center, snakeLength: 5);
         }
 
-        Position CurrentPosition => parts[0];
+        public void Grow() => snakeBody.Grow(NextPosition);
 
-        public void Grow() => parts.Insert(0, NextPosition);
-
-        public bool IsAt(Position nextPosition) =>
-            parts.Any(position => position.Equals(nextPosition));
-
-        private void Draw()
-        {
-            for (int i = 0; i < parts.Count; i++)
-            {
-                var pos = parts[i];
-
-                Console.SetCursorPosition(pos.X, pos.Y);
-
-                if (i == 0)
-                    Console.Write(snakeDirection.SnakeHead);
-                else
-                    Console.Write("#");
-            }
-        }
+        public bool IsAt(Position position) => snakeBody.IsAt(position);
 
         public bool Eats(Food food) => food.IsAt(NextPosition);
 
-        public bool Collides => maze.IsWallAt(NextPosition) || this.IsAt(NextPosition);
+        public bool Collides => maze.IsWallAt(NextPosition) || snakeBody.IsAt(NextPosition);
 
         public void ChangeDirection(Direction newDirection) => snakeDirection.Change(newDirection);
 
-        Position NextPosition => snakeDirection.NextPosition(CurrentPosition);
+        Position NextPosition => snakeDirection.NextPosition(snakeBody.CurrentPosition);
 
-        public void Move()
-        {
-            Clear();
-            UpdatePosition();
-            Draw();
-        }
-
-        private void UpdatePosition()
-        {
-            parts.Insert(0, NextPosition);
-            parts.RemoveAt(parts.Count - 1);
-        }
-
-        private void Clear()
-        {
-            foreach (var pos in parts)
-            {
-                Console.SetCursorPosition(pos.X, pos.Y);
-                Console.Write(" ");
-            }
-        }
+        public void Move() => snakeBody.MoveTo(snakeDirection.SnakeHead, NextPosition);
     }
 }
