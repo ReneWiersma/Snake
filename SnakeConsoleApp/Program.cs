@@ -10,9 +10,6 @@ namespace SnakeConsoleApp
     {
         static async Task Main(string[] args)
         {
-            var userIO = new UserIO();
-            var gameTimer = new GameTimer();
-
             var consoleDrawer = new ConsoleDrawer();
 
             var mazeDrawer = new MazeDrawer(consoleDrawer);
@@ -26,7 +23,9 @@ namespace SnakeConsoleApp
             var freePositions = new FreePositions(maze, snakeBody);
             var foodDrawer = new FoodDrawer(consoleDrawer);
             var food = new Food(freePositions, foodDrawer);
-            
+
+            var userIO = new UserIO();
+            var gameTimer = new GameTimer();
             var gameState = new GameState(maze, snake, food);
             var engine = new Engine(gameState, gameTimer, userIO);
 
