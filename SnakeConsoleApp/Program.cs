@@ -12,7 +12,7 @@ namespace SnakeConsoleApp
         {
             var userIO = new UserIO();
             var gameTimer = new GameTimer();
-            var maze = new Maze();
+            var maze = new Maze(height: 25, width: 90);
             var snakeBody = new SnakeBody(maze.Center, snakeLength: 5);
             var snakeDirection = new SnakeDirection();
             var snake = new Snake(snakeBody, snakeDirection);

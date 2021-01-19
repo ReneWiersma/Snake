@@ -4,13 +4,16 @@ namespace SnakeConsoleApp
 {
     public class Maze
     {
-        const int width = 90;
-        const int height = 25;
-
         readonly Random random = new();
 
-        public Maze()
+        private readonly int height;
+        private readonly int width;
+
+        public Maze(int height, int width)
         {
+            this.height = height;
+            this.width = width;
+            
             Draw();
         }
 
@@ -19,10 +22,10 @@ namespace SnakeConsoleApp
 
         public Position Center => new Position(width / 2, height / 2);
 
-        private static bool IsEdge(int row, int col) => 
-            row is 0 or width - 1 || col is 0 or height - 1;
+        private bool IsEdge(int row, int col) => 
+            row == 0 || row == width - 1 || col == 0 || col == height - 1;
 
-        public void Draw()
+        void Draw()
         {
             Console.SetCursorPosition(0, 0);
 
