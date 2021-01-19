@@ -30,14 +30,14 @@ namespace SnakeConsoleApp
                         walls.Add(new Position(col, row));
                 }
             }
-            
+
             return walls;
         }
 
-        public Position RandomPosition =>
+        public Position RandomFreePosition =>
             new Position(random.Next(width - 2) + 1, random.Next(height - 2) + 1);
 
-        public Position Center => new Position(width / 2, height / 2);
+        public Position StartPosition => new Position(width / 2, height / 2);
 
         private bool IsEdge(int col, int row) =>
             row == 0 || row == height - 1 || col == 0 || col == width - 1;

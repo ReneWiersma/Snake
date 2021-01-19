@@ -13,7 +13,7 @@
 
         public Position GetRandom()
         {
-            var newPosition = maze.RandomPosition;
+            var newPosition = maze.RandomFreePosition;
             
             if (snakeBody.IsAt(newPosition))
                 return GetRandom();
