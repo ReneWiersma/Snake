@@ -15,10 +15,10 @@ namespace SnakeConsoleApp
             var maze = new Maze();
             var snakeBody = new SnakeBody(maze.Center, snakeLength: 5);
             var snakeDirection = new SnakeDirection();
-            var snake = new Snake(maze, snakeBody, snakeDirection);
-            var freePositions = new FreePositions(maze, snake);
+            var snake = new Snake(snakeBody, snakeDirection);
+            var freePositions = new FreePositions(maze, snakeBody);
             var food = new Food(freePositions);
-            var gameState = new GameState(snake, food);
+            var gameState = new GameState(maze, snake, food);
             var engine = new Engine(gameState, gameTimer, userIO);
 
             await engine.Run();

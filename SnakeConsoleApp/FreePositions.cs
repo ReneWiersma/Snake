@@ -3,19 +3,19 @@
     public class FreePositions
     {
         private readonly Maze maze;
-        private readonly Snake snake;
+        private readonly SnakeBody snakeBody;
 
-        public FreePositions(Maze maze, Snake snake)
+        public FreePositions(Maze maze, SnakeBody snakeBody)
         {
             this.maze = maze;
-            this.snake = snake;
+            this.snakeBody = snakeBody;
         }
 
         public Position GetRandom()
         {
             var newPosition = maze.RandomPosition;
             
-            if (snake.IsAt(newPosition))
+            if (snakeBody.IsAt(newPosition))
                 return GetRandom();
 
             return newPosition;

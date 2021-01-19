@@ -2,11 +2,13 @@
 {
     public class GameState
     {
+        private readonly Maze maze;
         private readonly Snake snake;
         private readonly Food food;
 
-        public GameState(Snake snake, Food food)
+        public GameState(Maze maze, Snake snake, Food food)
         {
+            this.maze = maze;
             this.snake = snake;
             this.food = food;
 
@@ -19,7 +21,7 @@
 
         public void Update()
         {
-            if (snake.Collides)
+            if (snake.Collides(maze))
             {
                 Continue = false;
             }
