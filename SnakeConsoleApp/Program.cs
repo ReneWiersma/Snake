@@ -16,9 +16,9 @@ namespace SnakeConsoleApp
             var mazeDrawer = new MazeDrawer();
             var maze = new Maze(height: 25, width: 90, mazeDrawer);
 
-            var snakeBodyDrawer = new SnakeBodyDrawer();
-            var snakeBody = new SnakeBody(maze.StartPosition, snakeLength: 5, snakeBodyDrawer);
             var snakeDirection = new SnakeDirection();
+            var snakeBodyDrawer = new SnakeBodyDrawer(snakeDirection);
+            var snakeBody = new SnakeBody(maze.StartPosition, snakeLength: 5, snakeBodyDrawer);
             var snake = new Snake(snakeBody, snakeDirection);
             
             var freePositions = new FreePositions(maze, snakeBody);

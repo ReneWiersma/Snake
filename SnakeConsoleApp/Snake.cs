@@ -19,7 +19,7 @@
 
         public void ChangeDirection(Direction newDirection) => snakeDirection.Change(newDirection);
 
-        public void Move() => snakeBody.MoveTo(snakeDirection.SnakeHead, NextPosition);
+        public void Move() => snakeBody.MoveTo(NextPosition);
         
         Position NextPosition => snakeDirection.NextPosition(snakeBody.CurrentPosition);
     }

@@ -22,17 +22,18 @@ namespace SnakeConsoleApp
 
         public bool IsAt(Position other) => parts.Any(position => position.Equals(other));
 
-        public void MoveTo(string snakeHead, Position position)
+        public void MoveTo(Position position)
         {
             drawer.Clear(parts);
-            UpdatePosition(position);
-            drawer.Draw(parts, snakeHead);
+            
+            MoveHead(position);
+            RemoveTail();
+            
+            drawer.Draw(parts);
         }
 
-        private void UpdatePosition(Position position)
-        {
-            parts.Insert(0, position);
-            parts.RemoveAt(parts.Count - 1);
-        }
+        private void MoveHead(Position position) => parts.Insert(0, position);
+
+        private void RemoveTail() => parts.RemoveAt(parts.Count - 1);
     }
 }

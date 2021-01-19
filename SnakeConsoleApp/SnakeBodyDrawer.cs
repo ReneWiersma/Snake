@@ -5,7 +5,14 @@ namespace SnakeConsoleApp
 {
     public class SnakeBodyDrawer
     {
-        public void Draw(IList<Position> positions, string snakeHead)
+        private readonly SnakeDirection snakeDirection;
+
+        public SnakeBodyDrawer(SnakeDirection snakeDirection)
+        {
+            this.snakeDirection = snakeDirection;
+        }
+
+        public void Draw(IList<Position> positions)
         {
             for (int i = 0; i < positions.Count; i++)
             {
@@ -14,7 +21,7 @@ namespace SnakeConsoleApp
                 Console.SetCursorPosition(pos.X, pos.Y);
 
                 if (i == 0)
-                    Console.Write(snakeHead);
+                    Console.Write(snakeDirection.SnakeHead);
                 else
                     Console.Write("#");
             }
