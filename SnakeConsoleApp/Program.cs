@@ -17,7 +17,8 @@ namespace SnakeConsoleApp
             var snakeDirection = new SnakeDirection();
             var snake = new Snake(snakeBody, snakeDirection);
             var freePositions = new FreePositions(maze, snakeBody);
-            var food = new Food(freePositions);
+            var foodDrawer = new FoodDrawer();
+            var food = new Food(freePositions, foodDrawer);
             var gameState = new GameState(maze, snake, food);
             var engine = new Engine(gameState, gameTimer, userIO);
 

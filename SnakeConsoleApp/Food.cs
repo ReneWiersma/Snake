@@ -1,31 +1,25 @@
-﻿using System;
-
-namespace SnakeConsoleApp
+﻿namespace SnakeConsoleApp
 {
     public class Food
     {
         private Position position;
         private readonly FreePositions freePositions;
+        private readonly FoodDrawer drawer;
 
-        public Food(FreePositions freePositions)
+        public Food(FreePositions freePositions, FoodDrawer drawer)
         {
             this.freePositions = freePositions;
-            
+            this.drawer = drawer;
+
             Regenerate();
         }
 
         public bool IsAt(Position other) => position.Equals(other);
 
-        void Draw()
-        {
-            Console.SetCursorPosition(position.X, position.Y);
-            Console.Write('%');
-        }
-
         public void Regenerate()
         {
             position = freePositions.GetRandom();
-            Draw();
+            drawer.Draw(position);
         }
     }
 }
