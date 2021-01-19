@@ -5,13 +5,15 @@ namespace SnakeConsoleApp
 {
     public class MazeDrawer
     {
-        public void Draw(IList<Position> positions)
+        const string wallSymbol = "*";
+
+        private readonly ConsoleDrawer drawer;
+
+        public MazeDrawer(ConsoleDrawer drawer)
         {
-            foreach (var position in positions)
-            {
-                Console.SetCursorPosition(position.X, position.Y);
-                Console.Write("*");
-            }
+            this.drawer = drawer;
         }
+
+        public void Draw(IList<Position> positions) => drawer.Draw(positions, wallSymbol);
     }
 }

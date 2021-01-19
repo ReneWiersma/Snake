@@ -1,13 +1,16 @@
-﻿using System;
-
-namespace SnakeConsoleApp
+﻿namespace SnakeConsoleApp
 {
     public class FoodDrawer 
     {
-        public void Draw(Position position)
+        const string foodSymbol = "%";
+        
+        private readonly ConsoleDrawer drawer;
+
+        public FoodDrawer(ConsoleDrawer drawer)
         {
-            Console.SetCursorPosition(position.X, position.Y);
-            Console.Write('%');
+            this.drawer = drawer;
         }
+
+        public void Draw(Position position) => drawer.Draw(position, foodSymbol);
     }
 }

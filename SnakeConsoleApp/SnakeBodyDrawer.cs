@@ -1,39 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SnakeConsoleApp
 {
     public class SnakeBodyDrawer
     {
-        private readonly SnakeDirection snakeDirection;
+        const string snakeSymbol = "#";
 
-        public SnakeBodyDrawer(SnakeDirection snakeDirection)
+        private readonly SnakeDirection snakeDirection;
+        private readonly ConsoleDrawer drawer;
+
+        public SnakeBodyDrawer(SnakeDirection snakeDirection, ConsoleDrawer drawer)
         {
             this.snakeDirection = snakeDirection;
+            this.drawer = drawer;
         }
 
         public void Draw(IList<Position> positions)
         {
-            for (int i = 0; i < positions.Count; i++)
-            {
-                var pos = positions[i];
-
-                Console.SetCursorPosition(pos.X, pos.Y);
-
-                if (i == 0)
-                    Console.Write(snakeDirection.SnakeHead);
-                else
-                    Console.Write("#");
-            }
+            drawer.Draw(positions[0], snakeDirection.SnakeHead);
+            drawer.Draw(positions.Skip(1).ToList(), snakeSymbol);
         }
 
-        public void Clear(IList<Position> positions)
-        {
-            foreach (var position in positions)
-            {
-                Console.SetCursorPosition(position.X, position.Y);
-                Console.Write(" ");
-            }
-        }
+        public void Clear(IList<Position> positions) => drawer.Draw(positions, " ");
     }
 }

@@ -13,16 +13,18 @@ namespace SnakeConsoleApp
             var userIO = new UserIO();
             var gameTimer = new GameTimer();
 
-            var mazeDrawer = new MazeDrawer();
+            var consoleDrawer = new ConsoleDrawer();
+
+            var mazeDrawer = new MazeDrawer(consoleDrawer);
             var maze = new Maze(height: 25, width: 90, mazeDrawer);
 
             var snakeDirection = new SnakeDirection();
-            var snakeBodyDrawer = new SnakeBodyDrawer(snakeDirection);
+            var snakeBodyDrawer = new SnakeBodyDrawer(snakeDirection, consoleDrawer);
             var snakeBody = new SnakeBody(maze.StartPosition, snakeLength: 5, snakeBodyDrawer);
             var snake = new Snake(snakeBody, snakeDirection);
             
             var freePositions = new FreePositions(maze, snakeBody);
-            var foodDrawer = new FoodDrawer();
+            var foodDrawer = new FoodDrawer(consoleDrawer);
             var food = new Food(freePositions, foodDrawer);
             
             var gameState = new GameState(maze, snake, food);
