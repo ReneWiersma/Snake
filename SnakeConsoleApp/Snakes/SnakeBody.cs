@@ -24,8 +24,6 @@ namespace SnakeConsoleApp
 
         public void MoveTo(Position position)
         {
-            drawer.Clear(parts);
-            
             MoveHead(position);
             RemoveTail();
             
