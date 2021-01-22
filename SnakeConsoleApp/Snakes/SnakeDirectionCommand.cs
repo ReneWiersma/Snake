@@ -2,18 +2,15 @@
 {
     public class SnakeDirectionCommand : ICommand
     {
-        private readonly Snake snake;
+        private readonly SnakeDirection snakeDirection;
         private readonly Direction direction;
 
-        public SnakeDirectionCommand(Snake snake, Direction direction)
+        public SnakeDirectionCommand(SnakeDirection snakeDirection, Direction direction)
         {
-            this.snake = snake;
+            this.snakeDirection = snakeDirection;
             this.direction = direction;
         }
 
-        public void Execute()
-        {
-            snake.ChangeDirection(direction);
-        }
+        public void Execute() => snakeDirection.Change(direction);
     }
 }
