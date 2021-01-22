@@ -2,18 +2,18 @@
 
 namespace SnakeConsoleApp
 {
-    public class UserIO
+    public class GetUserCommand : IQuery<ICommand>
     {
         private readonly Func<Direction, ICommand> createSnakeDirectionCommand;
 
-        public UserIO(Func<Direction, ICommand> createSnakeDirectionCommand)
+        public GetUserCommand(Func<Direction, ICommand> createSnakeDirectionCommand)
         {
             this.createSnakeDirectionCommand = createSnakeDirectionCommand;
 
             Console.CursorVisible = false;
         }
 
-        public ICommand GetUserCommand()
+        public ICommand Execute()
         {
             Console.SetCursorPosition(0, 25);
 
@@ -36,11 +36,5 @@ namespace SnakeConsoleApp
             'w' => createSnakeDirectionCommand(Direction.Up),
             _ => new EmptyCommand()
         };
-
-        public void NotifyLoss()
-        {
-            Console.WriteLine("You lost!");
-            Console.ReadKey();
-        }
     }
 }

@@ -6,13 +6,15 @@ namespace SnakeConsoleApp
     {
         private readonly GameState gameState;
         private readonly GameTimer gameTimer;
-        private readonly UserIO userIO;
+        private readonly IQuery<ICommand> getUserCommand;
+        private readonly NotifyLossCommand notifyLoss;
 
-        public Engine(GameState gameState, GameTimer gameTimer, UserIO userIO)
+        public Engine(GameState gameState, GameTimer gameTimer, IQuery<ICommand> getUserCommand, NotifyLossCommand notifyLoss)
         {
             this.gameState = gameState;
             this.gameTimer = gameTimer;
-            this.userIO = userIO;
+            this.getUserCommand = getUserCommand;
+            this.notifyLoss = notifyLoss;
         }
 
         public async Task Run()
@@ -21,14 +23,14 @@ namespace SnakeConsoleApp
             {
                 await gameTimer.Delay();
 
-                var userCommand = userIO.GetUserCommand();
+                var userCommand = getUserCommand.Execute();
 
                 userCommand.Execute();
 
                 gameState.Update();
             }
 
-            userIO.NotifyLoss();
+            notifyLoss.Execute();
         }
     }
 }
