@@ -2,7 +2,7 @@
 
 namespace SnakeConsoleApp
 {
-    public class NotifyLossCommand : ICommand
+    public class NotifyLoss : ICommand
     {
         public void Execute()
         {

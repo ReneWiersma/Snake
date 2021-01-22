@@ -26,13 +26,13 @@ namespace SnakeConsoleApp
 
             SnakeDirectionCommand CreateChangeDirectionCommand(Direction direction) => new SnakeDirectionCommand(snakeDirection, direction);
 
-            var getUserCommand = new GetUserCommand(CreateChangeDirectionCommand);
-            var gameTimer = new GameTimer();
-            var gameState = new GameState(maze, snake, food);
-            var notifyLoss = new NotifyLossCommand();
-            var engine = new Engine(gameState, gameTimer, getUserCommand, notifyLoss);
+            var getUser = new GetUser(CreateChangeDirectionCommand);
+            var gameDelay = new GameDelay();
+            var updateGameState = new UpdateGameState(maze, snake, food);
+            var notifyLoss = new NotifyLoss();
+            var engine = new Engine(updateGameState, gameDelay, getUser, notifyLoss);
 
-            await engine.Run();
+            await engine.Execute();
         }
     }
 }

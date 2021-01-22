@@ -2,11 +2,11 @@
 
 namespace SnakeConsoleApp
 {
-    public class GetUserCommand : IQuery<ICommand>
+    public class GetUser : IQuery<ICommand>
     {
         private readonly Func<Direction, ICommand> createSnakeDirectionCommand;
 
-        public GetUserCommand(Func<Direction, ICommand> createSnakeDirectionCommand)
+        public GetUser(Func<Direction, ICommand> createSnakeDirectionCommand)
         {
             this.createSnakeDirectionCommand = createSnakeDirectionCommand;
 

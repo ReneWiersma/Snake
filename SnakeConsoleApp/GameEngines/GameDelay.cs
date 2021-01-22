@@ -2,10 +2,10 @@
 
 namespace SnakeConsoleApp
 {
-    public class GameTimer
+    public class GameDelay : IAsyncCommand
     {
         const int intervalMs = 100;
 
-        public async Task Delay() => await Task.Delay(intervalMs);
+        public async Task Execute() => await Task.Delay(intervalMs);
     }
 }

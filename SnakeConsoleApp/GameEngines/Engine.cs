@@ -2,32 +2,30 @@
 
 namespace SnakeConsoleApp
 {
-    public class Engine
+    public class Engine : IAsyncCommand
     {
-        private readonly GameState gameState;
-        private readonly GameTimer gameTimer;
+        private readonly IQuery<bool> updateGameState;
+        private readonly IAsyncCommand gameDelay;
         private readonly IQuery<ICommand> getUserCommand;
-        private readonly NotifyLossCommand notifyLoss;
+        private readonly ICommand notifyLoss;
 
-        public Engine(GameState gameState, GameTimer gameTimer, IQuery<ICommand> getUserCommand, NotifyLossCommand notifyLoss)
+        public Engine(IQuery<bool> updateGameState, IAsyncCommand gameDelay, IQuery<ICommand> getUserCommand, ICommand notifyLoss)
         {
-            this.gameState = gameState;
-            this.gameTimer = gameTimer;
+            this.updateGameState = updateGameState;
+            this.gameDelay = gameDelay;
             this.getUserCommand = getUserCommand;
             this.notifyLoss = notifyLoss;
         }
 
-        public async Task Run()
+        public async Task Execute()
         {
-            while (gameState.Continue)
+            while (updateGameState.Execute())
             {
-                await gameTimer.Delay();
+                await gameDelay.Execute();
 
                 var userCommand = getUserCommand.Execute();
 
                 userCommand.Execute();
-
-                gameState.Update();
             }
 
             notifyLoss.Execute();
