@@ -17,8 +17,6 @@
 
         public bool Continue { get; private set; }
 
-        public void ChangeSnakeDirection(Direction direction) => snake.ChangeDirection(direction);
-
         public void Update()
         {
             if (snake.Collides(maze))

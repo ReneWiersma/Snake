@@ -24,7 +24,9 @@ namespace SnakeConsoleApp
             var foodDrawer = new FoodDrawer(consoleDrawer);
             var food = new Food(freePositions, foodDrawer);
 
-            var userIO = new UserIO();
+            SnakeDirectionCommand CreateChangeDirectionCommand(Direction direction) => new SnakeDirectionCommand(snake, direction);
+
+            var userIO = new UserIO(CreateChangeDirectionCommand);
             var gameTimer = new GameTimer();
             var gameState = new GameState(maze, snake, food);
             var engine = new Engine(gameState, gameTimer, userIO);

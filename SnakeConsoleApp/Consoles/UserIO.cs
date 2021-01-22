@@ -4,35 +4,37 @@ namespace SnakeConsoleApp
 {
     public class UserIO
     {
-        public UserIO()
+        private readonly Func<Direction, ICommand> createSnakeDirectionCommand;
+
+        public UserIO(Func<Direction, ICommand> createSnakeDirectionCommand)
         {
+            this.createSnakeDirectionCommand = createSnakeDirectionCommand;
+
             Console.CursorVisible = false;
         }
 
-        public bool TryGetDirection(out Direction direction)
+        public ICommand GetUserCommand()
         {
             Console.SetCursorPosition(0, 25);
 
             if (Console.KeyAvailable)
             {
                 var input = Console.ReadKey(intercept: true);
-                direction = ProcessInput(input.KeyChar);
-                return true;
+                return ProcessInput(input.KeyChar);
             }
             else
             {
-                direction = Direction.Up;
-                return false;
+                return new EmptyCommand();
             }
         }
 
-        Direction ProcessInput(char input) => input switch
+        ICommand ProcessInput(char input) => input switch
         {
-            's' => Direction.Down,
-            'a' => Direction.Left,
-            'd' => Direction.Right,
-            'w' => Direction.Up,
-            _ => Direction.Up,
+            's' => createSnakeDirectionCommand(Direction.Down),
+            'a' => createSnakeDirectionCommand(Direction.Left),
+            'd' => createSnakeDirectionCommand(Direction.Right),
+            'w' => createSnakeDirectionCommand(Direction.Up),
+            _ => new EmptyCommand()
         };
 
         public void NotifyLoss()

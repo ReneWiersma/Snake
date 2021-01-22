@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace SnakeConsoleApp
 {
@@ -22,8 +21,9 @@ namespace SnakeConsoleApp
             {
                 await gameTimer.Delay();
 
-                if (userIO.TryGetDirection(out var direction))
-                    gameState.ChangeSnakeDirection(direction);
+                var userCommand = userIO.GetUserCommand();
+
+                userCommand.Execute();
 
                 gameState.Update();
             }
